@@ -2,7 +2,8 @@ package com.jojobi.mm.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Setter
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(callSuper = true)
 @Entity
 public class Transaction extends BaseEntity {
 
