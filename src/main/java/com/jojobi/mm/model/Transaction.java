@@ -9,8 +9,6 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @ToString(callSuper = true)
 @Entity
 public class Transaction extends BaseEntity {
@@ -32,4 +30,20 @@ public class Transaction extends BaseEntity {
     @ManyToOne
     private Account counterPartyAccount;
 
+    @Builder
+    public Transaction(Long id, LocalDate valueDate, LocalDate bookingDate, TransactionType type,
+                       String text, Double amount, String mandate, String customerReference, Account account,
+                       Counterparty counterparty, Account counterPartyAccount) {
+        super(id);
+        this.valueDate = valueDate;
+        this.bookingDate = bookingDate;
+        this.type = type;
+        this.text = text;
+        this.amount = amount;
+        this.mandate = mandate;
+        this.customerReference = customerReference;
+        this.account = account;
+        this.counterparty = counterparty;
+        this.counterPartyAccount = counterPartyAccount;
+    }
 }
