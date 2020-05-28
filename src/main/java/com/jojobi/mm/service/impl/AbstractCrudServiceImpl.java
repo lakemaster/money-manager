@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public abstract class AbstractCrudServiceImpl<T, ID, REPO extends CrudRepository> implements CrudService<T, ID> {
 
-    private REPO repo;
+    protected REPO repo;
 
     public AbstractCrudServiceImpl(REPO repo) {
         this.repo = repo;

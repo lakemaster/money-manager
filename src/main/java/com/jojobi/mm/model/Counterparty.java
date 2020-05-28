@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = "accounts")
+@EqualsAndHashCode(callSuper = true, exclude = "accounts")
 @Entity
 public class Counterparty extends BaseEntity {
 

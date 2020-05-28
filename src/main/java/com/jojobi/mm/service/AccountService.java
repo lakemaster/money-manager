@@ -1,6 +1,11 @@
 package com.jojobi.mm.service;
 
 import com.jojobi.mm.model.Account;
+import com.jojobi.mm.model.Transaction;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface AccountService extends CrudService<Account, Long> {
+    Optional<Account> findAccountByIsin(String isin);
 }

@@ -8,7 +8,8 @@ import javax.persistence.ManyToOne;
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "counterparty")
+@EqualsAndHashCode(callSuper = true, exclude = "counterparty")
 @Entity
 public class Account extends BaseEntity {
 
