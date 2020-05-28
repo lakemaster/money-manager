@@ -8,8 +8,6 @@ import javax.persistence.ManyToOne;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @ToString(callSuper = true)
 @Entity
 public class Account extends BaseEntity {
@@ -20,4 +18,12 @@ public class Account extends BaseEntity {
     @ManyToOne
     private Counterparty counterparty;
 
+
+    @Builder
+    public Account(Long id, String isin, String bic, Counterparty counterparty) {
+        super(id);
+        this.isin = isin;
+        this.bic = bic;
+        this.counterparty = counterparty;
+    }
 }

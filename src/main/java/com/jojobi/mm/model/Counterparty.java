@@ -1,6 +1,5 @@
 package com.jojobi.mm.model;
 
-import com.jojobi.mm.exception.InvalidDataException;
 import lombok.*;
 
 import javax.persistence.CascadeType;
@@ -28,12 +27,6 @@ public class Counterparty extends BaseEntity {
         super(id);
         this.name = name;
         this.creditorId = creditorId;
-
-        accounts.forEach(acc -> {
-            if (acc.getCounterparty() != null && !this.equals(acc))
-                throw new InvalidDataException("Cannot assign a foreign account to " + this);
-            acc.setCounterparty(this);
-        });
         this.accounts = new ArrayList<>(accounts);
     }
 }

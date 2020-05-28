@@ -1,6 +1,9 @@
 package com.jojobi.mm.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +14,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @MappedSuperclass
-@ToString
 public class BaseEntity {
 
     @Id
