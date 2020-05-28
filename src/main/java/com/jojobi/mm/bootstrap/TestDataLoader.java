@@ -2,6 +2,7 @@ package com.jojobi.mm.bootstrap;
 
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.Counterparty;
+import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.service.AccountService;
 import com.jojobi.mm.service.CounterpartyService;
 import com.jojobi.mm.service.TransactionService;
@@ -32,6 +33,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static final Long CP2_ACCOUNT_ID = 3L;
     public static final String CP2_ACCOUNT_BIC = "GHTRF4564";
     public static final String CP2_ACCOUNT_ISIN = "CH36453658763";
+
+    public static final Long MYSELF_ID = 3L;
+    public static final String MYSELF_NAME = "Bilbo Beutlin";
+    public static final Long MYSELF_ACCOUNT_ID = 4L;
+    public static final String MYSELF_ACCOUNT_BIC = "IUDEF239875";
+    public static final String MYSELF_ACCOUNT_ISIN = "GB9081143983";
 
 
     private AccountService accountService;
@@ -72,7 +79,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         acc1.setCounterparty(cp1);
         acc2.setCounterparty(cp1);
 
-        counterpartyService.save(cp1);
+        cp1 = counterpartyService.save(cp1);
 
         // Counterparty 2
         Account acc3 = Account.builder()
@@ -87,11 +94,27 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         acc3.setCounterparty(cp2);
 
-        counterpartyService.save(cp2);
+        cp2 = counterpartyService.save(cp2);
+
+
+        // myself
+        Account myAccount = Account.builder()
+                .bic(MYSELF_ACCOUNT_BIC)
+                .isin(MYSELF_ACCOUNT_ISIN)
+                .build();
+
+        Counterparty myself = Counterparty.builder()
+                .name(MYSELF_NAME)
+                .accounts(List.of(myAccount))
+                .build();
+
+        myAccount.setCounterparty(myself);
+
+        myself = counterpartyService.save(myself);
 
 
         // Transactions
-
-
+        Transaction t1 = Transaction.builder()
+                .build();
     }
 }

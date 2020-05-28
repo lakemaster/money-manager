@@ -31,7 +31,7 @@ class MoneyManagerApplicationTests {
     @Test
     void checkCounterparties() {
         List<Counterparty> counterparties = counterpartyService.findAll();
-        assertThat(counterparties.size()).isGreaterThanOrEqualTo(2);
+        assertThat(counterparties.size()).isGreaterThanOrEqualTo(3);
     }
 
     @Test
@@ -61,5 +61,15 @@ class MoneyManagerApplicationTests {
         assertThat(acc.getIsin()).isEqualTo(TestDataLoader.CP2_ACCOUNT_ISIN);
         assertThat(acc.getCounterparty()).isEqualTo(cp2);
         assertThat(acc.getCounterparty().getId()).isEqualTo(TestDataLoader.COUNTERPARTY2_ID);
+
+        Counterparty myself = counterpartyService.findById(TestDataLoader.MYSELF_ID).orElseThrow();
+        assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
+        assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
+
+        Account myAcc = myself.getAccounts().get(0);
+        assertThat(myAcc.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
+        assertThat(myAcc.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
+        assertThat(myAcc.getCounterparty()).isEqualTo(myself);
+        assertThat(myAcc.getCounterparty().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
     }
 }
