@@ -36,20 +36,20 @@ class MoneyManagerApplicationTests {
 
     @Test
     void checkCounterparty() {
-        Counterparty cp = counterpartyService.findById(1L).orElseThrow();
-        assertThat(cp.getId()).isEqualTo(1);
+        Counterparty cp = counterpartyService.findById(TestDataLoader.COUNTERPARTY1_ID).orElseThrow();
+        assertThat(cp.getId()).isEqualTo(TestDataLoader.COUNTERPARTY1_ID);
         assertThat(cp.getName()).isEqualTo(TestDataLoader.COUNTERPARTY1_NAME);
 
         Account acc1 = cp.getAccounts().get(0);
         assertThat(acc1.getBic()).isEqualTo(TestDataLoader.ACCOUNT1_BIC);
         assertThat(acc1.getIsin()).isEqualTo(TestDataLoader.ACCOUNT1_ISIN);
         assertThat(acc1.getCounterparty()).isEqualTo(cp);
-        assertThat(acc1.getCounterparty().getId()).isEqualTo(1L);
+        assertThat(acc1.getCounterparty().getId()).isEqualTo(TestDataLoader.COUNTERPARTY1_ID);
 
-        Account acc2 = cp.getAccounts().get(0);
-        assertThat(acc2.getBic()).isEqualTo(TestDataLoader.ACCOUNT1_BIC);
-        assertThat(acc2.getIsin()).isEqualTo(TestDataLoader.ACCOUNT1_ISIN);
+        Account acc2 = cp.getAccounts().get(1);
+        assertThat(acc2.getBic()).isEqualTo(TestDataLoader.ACCOUNT2_BIC);
+        assertThat(acc2.getIsin()).isEqualTo(TestDataLoader.ACCOUNT2_ISIN);
         assertThat(acc2.getCounterparty()).isEqualTo(cp);
-        assertThat(acc2.getCounterparty().getId()).isEqualTo(1L);
+        assertThat(acc2.getCounterparty().getId()).isEqualTo(TestDataLoader.COUNTERPARTY1_ID);
     }
 }

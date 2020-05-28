@@ -47,19 +47,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private void loadTestCounterparties() {
 
         Account acc1 = Account.builder()
-                .id(ACCOUNT1_ID)
                 .bic(ACCOUNT1_BIC)
                 .isin(ACCOUNT1_ISIN)
                 .build();
 
         Account acc2 = Account.builder()
-                .id(ACCOUNT2_ID)
                 .bic(ACCOUNT2_BIC)
                 .isin(ACCOUNT2_ISIN)
                 .build();
 
         Counterparty cp = Counterparty.builder()
-                .id(COUNTERPARTY1_ID)
                 .name(COUNTERPARTY1_NAME)
                 .accounts(List.of(acc1, acc2))
                 .build();
