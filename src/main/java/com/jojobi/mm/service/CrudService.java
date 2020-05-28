@@ -7,7 +7,7 @@ public interface CrudService<T, ID> {
 
     List<T> findAll();
 
-    Optional<T> findById(ID id);
+    T findById(ID id);
 
     T save(T obj);
 }

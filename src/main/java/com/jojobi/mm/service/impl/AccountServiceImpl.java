@@ -18,7 +18,7 @@ public class AccountServiceImpl extends AbstractCrudServiceImpl<Account, Long, A
     }
 
     @Override
-    public Optional<Account> findAccountByIsin(String isin) {
-        return repo.findByIsin(isin);
+    public Account findAccountByIsin(String isin) {
+        return repo.findByIsin(isin).orElse(null);
     }
 }

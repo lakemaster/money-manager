@@ -22,7 +22,7 @@ import java.util.List;
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     public static final Long MYSELF_ID = 1L;
-    public static final String MYSELF_NAME = "Bilbo Beutlin";
+    public static final String MYSELF_NAME = "Max Mustermann";
     public static final Long MYSELF_ACCOUNT_ID = 1L;
     public static final String MYSELF_ACCOUNT_BIC = "IUDEF239875";
     public static final String MYSELF_ACCOUNT_ISIN = "GB9081143983";

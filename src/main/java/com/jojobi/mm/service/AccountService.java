@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService extends CrudService<Account, Long> {
-    Optional<Account> findAccountByIsin(String isin);
+    Account findAccountByIsin(String isin);
 }

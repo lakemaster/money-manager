@@ -1,13 +1,14 @@
 package com.jojobi.mm.service.impl;
 
 import com.jojobi.mm.service.CrudService;
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractCrudServiceImpl<T, ID, REPO extends CrudRepository> implements CrudService<T, ID> {
+public abstract class AbstractCrudServiceImpl<T, ID, REPO extends CrudRepository<T, ID>> implements CrudService<T, ID> {
 
     protected REPO repo;
 
@@ -17,14 +18,12 @@ public abstract class AbstractCrudServiceImpl<T, ID, REPO extends CrudRepository
 
     @Override
     public List<T> findAll() {
-        List<T> result = new ArrayList<>();
-        repo.findAll().forEach(obj -> result.add((T) obj));
-        return result;
+        return IterableUtils.toList(repo.findAll());
     }
 
     @Override
-    public Optional<T> findById(ID id) {
-        return repo.findById(id);
+    public T findById(ID id) {
+        return repo.findById(id).orElse(null);
     }
 
     @Override

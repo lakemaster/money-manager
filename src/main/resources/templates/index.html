@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <link rel="stylesheet" href="lib/skeleton/normalize.css" />
+    <link rel="stylesheet" href="lib/skeleton/skeleton.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li class="navigation-item">
+                <a href="/">Start</a>
+            </li>
+        </ul>
+        <div style="clear: both">&nbsp;</div>
+
+        <h1>My Money Manager</h1>
+        <!--/*@thymesVar id="myself" type="com.jojobi.mm.model.Counterparty"*/-->
+        <p th:text="${myself.getName()}"> Absatz 1</p>
+        <p> Absatz 2</p>
+        <p> Absatz 3</p>
+    </div>
+</body>
+</html>
