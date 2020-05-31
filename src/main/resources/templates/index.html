@@ -18,19 +18,27 @@
 
         <h1>My Money Manager</h1>
         <!--/*@thymesVar id="myself" type="com.jojobi.mm.model.Counterparty"*/-->
+        <!--/*@thymesVar id="accountInfos" type="java.util.List"*/-->
+        <!--/*@thymesVar id="accountInfo" type="com.jojobi.mm.info.AccountInfo"*/-->
         <h2 th:text="${'List of Accounts: ' + myself.getName()}">List of Accounts: My Name</h2>
 
-        <table id="accounts" class="xyz">
+        <table id="accounts" class="u-full-width">
             <thead>
                 <tr>
                     <th>ISIN</th>
                     <th>BIC</th>
+                    <th>Transactions</th>
+                    <th>From</th>
+                    <th>To</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="account: ${myself.getAccounts()}">
-                    <td th:text="${account.getIsin()}">DE12345678901234</td>
-                    <td th:text="${account.getBic()}">OHNOLADEXXXX</td>
+                <tr th:each="accountInfo: ${accountInfos}">
+                    <td th:text="${accountInfo.getAccount().getIsin()}">DE12345678901234</td>
+                    <td th:text="${accountInfo.getAccount().getBic()}">OHNOLADEXXXX</td>
+                    <td th:text="${accountInfo.getNumberOfTransaction()}">100</td>
+                    <td th:text="${accountInfo.getFrom()}">2020-01-01</td>
+                    <td th:text="${accountInfo.getTo()}">2020-05-01</td>
                 </tr>
             </tbody>
         </table>
