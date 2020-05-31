@@ -18,9 +18,22 @@
 
         <h1>My Money Manager</h1>
         <!--/*@thymesVar id="myself" type="com.jojobi.mm.model.Counterparty"*/-->
-        <p th:text="${myself.getName()}"> Absatz 1</p>
-        <p> Absatz 2</p>
-        <p> Absatz 3</p>
+        <h2 th:text="${'List of Accounts: ' + myself.getName()}">List of Accounts: My Name</h2>
+
+        <table id="accounts" class="xyz">
+            <thead>
+                <tr>
+                    <th>ISIN</th>
+                    <th>BIC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="account: ${myself.getAccounts()}">
+                    <td th:text="${account.getIsin()}">DE12345678901234</td>
+                    <td th:text="${account.getBic()}">OHNOLADEXXXX</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
