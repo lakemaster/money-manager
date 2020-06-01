@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <link rel="stylesheet" href="lib/skeleton/normalize.css" />
+    <link rel="stylesheet" href="lib/skeleton/skeleton.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li class="navigation-item">
+                <a href="/">Start</a>
+            </li>
+        </ul>
+        <div style="clear: both">&nbsp;</div>
+
+        <h1>My Money Manager</h1>
+        <!--/*@thymesVar id="account" type="com.jojobi.mm.model.Account"*/-->
+        <!--/*@thymesVar id="transactions" type="java.util.List"*/-->
+        <!--/*@thymesVar id="transaction" type="com.jojobi.mm.model.Transaction"*/-->
+        <h2 th:text="${'List of Transactions on account: ' + account.getIsin()}">List of Transactions on account: DE983216464912143</h2>
+
+        <table id="transactions" class="u-full-width">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Text</th>
+                    <th>Amount</th>
+                    <th>ValueDate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="transaction: ${transactions}">
+                    <td th:text="${transaction.getType()}">Withdrawel</td>
+                    <td th:text="${transaction.getText()}">Invoice</td>
+                    <td th:text="${transaction.getAmount()}">100</td>
+                    <td th:text="${transaction.getValueDate()}">2020-01-11</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
