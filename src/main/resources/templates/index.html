@@ -30,15 +30,20 @@
                     <th>Transactions</th>
                     <th>From</th>
                     <th>To</th>
+                    <th>View Transactions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="accountInfo: ${accountInfos}">
-                    <td th:text="${accountInfo.getAccount().getIsin()}">DE12345678901234</td>
+                    <td>
+                        <a th:text="${accountInfo.getAccount().getIsin()}" href="#" th:href="@{'/transactions/' + ${accountInfo.getAccount().getId()}}">DE12345678901234
+                        </a>
+                    </td>
                     <td th:text="${accountInfo.getAccount().getBic()}">OHNOLADEXXXX</td>
                     <td th:text="${accountInfo.getNumberOfTransaction()}">100</td>
                     <td th:text="${accountInfo.getFrom()}">2020-01-01</td>
                     <td th:text="${accountInfo.getTo()}">2020-05-01</td>
+                    <td><a href="#" th:href="@{'/transactions/' + ${accountInfo.getAccount().getId()}}">Transactions</a></td>
                 </tr>
             </tbody>
         </table>
