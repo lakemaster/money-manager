@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <link rel="stylesheet" href="/lib/skeleton/normalize.css" />
+    <link rel="stylesheet" href="/lib/skeleton/skeleton.css" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <div class="container">
+        <ul class="navigation">
+            <li class="navigation-item">
+                <a href="/">Start</a>
+            </li>
+        </ul>
+        <div style="clear: both">&nbsp;</div>
+
+        <h1>My Money Manager</h1>
+        <!--/*@thymesVar id="counterparty" type="com.jojobi.mm.model.Counterparty"*/-->
+        <!--/*@thymesVar id="account" type="com.jojobi.mm.info.Account"*/-->
+        <h2 th:text="${'Counterparty: ' + counterparty.getName()}">Grocer's Shop</h2>
+
+        <p th:text="${'Creditor Id: ' + counterparty.getCreditorId()}">Creditor Id: DE873VVV0987598762</p>
+        <br>
+
+        <p>Accounts:</p>
+        <table id="accounts" class="u-full-width">
+            <thead>
+            <tr>
+                <th>ISIN</th>
+                <th>BIC</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account: ${counterparty.getAccounts()}">
+                <td>
+                    <a th:text="${account.getIsin()}" th:href="@{'/transactions/' + ${account.getId()}}">DE12345678901234
+                    </a>
+                </td>
+                <td th:text="${account.getBic()}">LESWEAXXXX</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

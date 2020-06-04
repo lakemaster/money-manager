@@ -26,6 +26,7 @@
             <thead>
                 <tr>
                     <th>Type</th>
+                    <th>Counterparty</th>
                     <th>Text</th>
                     <th>Amount</th>
                     <th>ValueDate</th>
@@ -33,8 +34,14 @@
             </thead>
             <tbody>
                 <tr th:each="transaction: ${transactions}">
-                    <td th:text="${transaction.getType()}">Withdrawel</td>
-                    <td th:text="${transaction.getText()}">Invoice</td>
+                    <td th:text="${transaction.getType()}">Debit</td>
+                    <td>
+                        <a th:text="${transaction.getCounterparty().getName()}"
+                           th:href="@{'/counterparty/' + ${transaction.getCounterparty().getId()}}">Grocer's Shop
+                        </a>
+                    </td>
+
+                    <td th:text="${transaction.getText()}">Shopping bill</td>
                     <td th:text="${transaction.getAmount()}">100</td>
                     <td th:text="${transaction.getValueDate()}">2020-01-11</td>
                 </tr>
