@@ -2,10 +2,10 @@ package com.jojobi.mm;
 
 import com.jojobi.mm.bootstrap.TestDataLoader;
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterparty;
+import com.jojobi.mm.model.Counterpart;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartyService;
+import com.jojobi.mm.service.CounterpartService;
 import com.jojobi.mm.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoneyManagerApplicationTests {
 
     @Autowired
-    private CounterpartyService counterpartyService;
+    private CounterpartService counterpartService;
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -31,48 +31,48 @@ class MoneyManagerApplicationTests {
     }
 
     @Test
-    void checkCounterparties() {
-        List<Counterparty> counterparties = counterpartyService.findAll();
-        assertThat(counterparties.size()).isGreaterThanOrEqualTo(3);
+    void checkCounterparts() {
+        List<Counterpart> counterparts = counterpartService.findAll();
+        assertThat(counterparts.size()).isGreaterThanOrEqualTo(3);
     }
 
     @Test
-    void checkCounterparty() {
-        Counterparty insuranceCompany = counterpartyService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+    void checkCounterpart() {
+        Counterpart insuranceCompany = counterpartService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getName()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_NAME);
 
         Account acc1 = insuranceCompany.getAccounts().get(0);
         assertThat(acc1.getBic()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_BIC);
         assertThat(acc1.getIsin()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ISIN);
-        assertThat(acc1.getCounterparty().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(acc1.getCounterparty()).isEqualTo(insuranceCompany);
+        assertThat(acc1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(acc1.getCounterpart()).isEqualTo(insuranceCompany);
 
         Account acc2 = insuranceCompany.getAccounts().get(1);
         assertThat(acc2.getBic()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT2_BIC);
         assertThat(acc2.getIsin()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT2_ISIN);
-        assertThat(acc2.getCounterparty().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(acc2.getCounterparty()).isEqualTo(insuranceCompany);
+        assertThat(acc2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(acc2.getCounterpart()).isEqualTo(insuranceCompany);
 
-        Counterparty employer = counterpartyService.findById(TestDataLoader.CP_EMPLOYER_ID);
+        Counterpart employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(employer.getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(employer.getName()).isEqualTo(TestDataLoader.CP_EMPLOYER_NAME);
 
         Account acc = employer.getAccounts().get(0);
         assertThat(acc.getBic()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_BIC);
         assertThat(acc.getIsin()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ISIN);
-        assertThat(acc.getCounterparty().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
-        assertThat(acc.getCounterparty()).isEqualTo(employer);
+        assertThat(acc.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
+        assertThat(acc.getCounterpart()).isEqualTo(employer);
 
-        Counterparty myself = counterpartyService.findById(TestDataLoader.MYSELF_ID);
+        Counterpart myself = counterpartService.findById(TestDataLoader.MYSELF_ID);
         assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
         assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
 
         Account myAcc = myself.getAccounts().get(0);
         assertThat(myAcc.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
         assertThat(myAcc.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
-        assertThat(myAcc.getCounterparty().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
-        assertThat(myAcc.getCounterparty()).isEqualTo(myself);
+        assertThat(myAcc.getCounterpart().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
+        assertThat(myAcc.getCounterpart()).isEqualTo(myself);
     }
 
     @Test
@@ -81,7 +81,7 @@ class MoneyManagerApplicationTests {
         assertThat(myAccount.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
         assertThat(myAccount.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
 
-        Counterparty myself = myAccount.getCounterparty();
+        Counterpart myself = myAccount.getCounterpart();
         assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
         assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
         assertThat(myself.getAccounts().size()).isEqualTo(1);
@@ -97,12 +97,12 @@ class MoneyManagerApplicationTests {
         assertThat(tr1.getBookingDate()).isEqualTo(TestDataLoader.MY_SALARY_BOOKING_DATE);
         assertThat(tr1.getValueDate()).isEqualTo(TestDataLoader.MY_SALARY_VALUE_DATE);
         assertThat((tr1.getCustomerReference())).isNullOrEmpty();
-        assertThat(tr1.getMandate()).isNullOrEmpty();;
+        assertThat(tr1.getMandate()).isNullOrEmpty();
         assertThat(tr1.getText()).isEqualTo(TestDataLoader.MY_SALARY_TRANSACTION_TEXT);
 
-        Counterparty employer = counterpartyService.findById(TestDataLoader.CP_EMPLOYER_ID);
-        assertThat(tr1.getCounterparty().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
-        assertThat(tr1.getCounterparty()).isEqualTo(employer);
+        Counterpart employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
+        assertThat(tr1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
+        assertThat(tr1.getCounterpart()).isEqualTo(employer);
         assertThat(tr1.getCounterPartyAccount().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ID);
         assertThat(tr1.getCounterPartyAccount()).isEqualTo(employer.getAccounts().get(0));
 
@@ -115,9 +115,9 @@ class MoneyManagerApplicationTests {
         assertThat(tr2.getMandate()).isEqualTo(TestDataLoader.MY_INSURANCE_MANDATE);
         assertThat(tr2.getText()).isEqualTo(TestDataLoader.MY_INSURANCE_TRANSACTION_TEXT);
 
-        Counterparty insuranceCompany = counterpartyService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(tr2.getCounterparty().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(tr2.getCounterparty()).isEqualTo(insuranceCompany);
+        Counterpart insuranceCompany = counterpartService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(tr2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(tr2.getCounterpart()).isEqualTo(insuranceCompany);
         assertThat(tr2.getCounterPartyAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);
         assertThat(tr2.getCounterPartyAccount()).isEqualTo(insuranceCompany.getAccounts().get(0));
 

@@ -15,16 +15,16 @@ import java.util.List;
 @ToString(callSuper = true, exclude = "accounts")
 @EqualsAndHashCode(callSuper = true, exclude = "accounts")
 @Entity
-public class Counterparty extends BaseEntity {
+public class Counterpart extends BaseEntity {
 
     private String name;
     private String creditorId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "counterparty", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "counterpart", fetch = FetchType.EAGER)
     private List<Account> accounts;
 
     @Builder
-    public Counterparty(Long id, String name, String creditorId, List<Account> accounts) {
+    public Counterpart(Long id, String name, String creditorId, List<Account> accounts) {
         super(id);
         this.name = name;
         this.creditorId = creditorId;

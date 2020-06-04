@@ -17,11 +17,11 @@
         <div style="clear: both">&nbsp;</div>
 
         <h1>My Money Manager</h1>
-        <!--/*@thymesVar id="counterparty" type="com.jojobi.mm.model.Counterparty"*/-->
+        <!--/*@thymesVar id="counterpart" type="com.jojobi.mm.model.Counterpart"*/-->
         <!--/*@thymesVar id="account" type="com.jojobi.mm.info.Account"*/-->
-        <h2 th:text="${'Counterparty: ' + counterparty.getName()}">Grocer's Shop</h2>
+        <h2 th:text="${'Counterpart: ' + counterpart.getName()}">Grocer's Shop</h2>
 
-        <p th:text="${'Creditor Id: ' + counterparty.getCreditorId()}">Creditor Id: DE873VVV0987598762</p>
+        <p th:text="${'Creditor Id: ' + counterpart.getCreditorId()}">Creditor Id: DE873VVV0987598762</p>
         <br>
 
         <p>Accounts:</p>
@@ -33,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="account: ${counterparty.getAccounts()}">
+            <tr th:each="account: ${counterpart.getAccounts()}">
                 <td>
                     <a th:text="${account.getIsin()}" th:href="@{'/transactions/' + ${account.getId()}}">DE12345678901234
                     </a>

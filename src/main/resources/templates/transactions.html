@@ -26,7 +26,7 @@
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Counterparty</th>
+                    <th>Counterpart</th>
                     <th>Text</th>
                     <th>Amount</th>
                     <th>ValueDate</th>
@@ -36,8 +36,8 @@
                 <tr th:each="transaction: ${transactions}">
                     <td th:text="${transaction.getType()}">Debit</td>
                     <td>
-                        <a th:text="${transaction.getCounterparty().getName()}"
-                           th:href="@{'/counterparty/' + ${transaction.getCounterparty().getId()}}">Grocer's Shop
+                        <a th:text="${transaction.getCounterpart().getName()}"
+                           th:href="@{'/counterpart/' + ${transaction.getCounterpart().getId()}}">Grocer's Shop
                         </a>
                     </td>
 

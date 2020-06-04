@@ -1,11 +1,11 @@
 package com.jojobi.mm.bootstrap;
 
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterparty;
+import com.jojobi.mm.model.Counterpart;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.model.TransactionType;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartyService;
+import com.jojobi.mm.service.CounterpartService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -55,23 +55,23 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
 
     private AccountService accountService;
-    private CounterpartyService counterpartyService;
+    private CounterpartService counterpartService;
     private TransactionService transactionService;
 
-    public TestDataLoader(AccountService accountService, CounterpartyService counterpartyService, TransactionService transactionService) {
+    public TestDataLoader(AccountService accountService, CounterpartService counterpartService, TransactionService transactionService) {
         this.accountService = accountService;
-        this.counterpartyService = counterpartyService;
+        this.counterpartService = counterpartService;
         this.transactionService = transactionService;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("Run {}", this.getClass().getSimpleName());
-        loadTestCounterparties();
+        loadTestCounterparts();
 
     }
 
-    private void loadTestCounterparties() {
+    private void loadTestCounterparts() {
 
         // myself
         Account myAccount = Account.builder()
@@ -79,33 +79,33 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .isin(MYSELF_ACCOUNT_ISIN)
                 .build();
 
-        Counterparty myself = Counterparty.builder()
+        Counterpart myself = Counterpart.builder()
                 .name(MYSELF_NAME)
                 .accounts(List.of(myAccount))
                 .build();
 
-        myAccount.setCounterparty(myself);
+        myAccount.setCounterpart(myself);
 
-        myself = counterpartyService.save(myself);
+        counterpartService.save(myself);
 
 
-        // Counterparty Employer
+        // Counterpart Employer
         Account employerAccount = Account.builder()
                 .bic(CP_EMPLOYER_ACCOUNT_BIC)
                 .isin(CP_EMPLOYER_ACCOUNT_ISIN)
                 .build();
 
-        Counterparty employer = Counterparty.builder()
+        Counterpart employer = Counterpart.builder()
                 .name(CP_EMPLOYER_NAME)
                 .accounts(List.of(employerAccount))
                 .build();
 
-        employerAccount.setCounterparty(employer);
+        employerAccount.setCounterpart(employer);
 
-        employer = counterpartyService.save(employer);
+        employer = counterpartService.save(employer);
 
 
-        // Counterparty Insurance Company
+        // Counterpart Insurance Company
         Account insuranceAccount1 = Account.builder()
                 .bic(CP_INSURANCE_ACCOUNT1_BIC)
                 .isin(CP_INSURANCE_ACCOUNT1_ISIN)
@@ -116,16 +116,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .isin(CP_INSURANCE_ACCOUNT2_ISIN)
                 .build();
 
-        Counterparty insuranceCompany = Counterparty.builder()
+        Counterpart insuranceCompany = Counterpart.builder()
                 .name(CP_INSURANCE_COMPANY_NAME)
                 .accounts(List.of(insuranceAccount1, insuranceAccount2))
                 .creditorId(CP_INSURANCE_CREDITOR_ID)
                 .build();
 
-        insuranceAccount1.setCounterparty(insuranceCompany);
-        insuranceAccount2.setCounterparty(insuranceCompany);
+        insuranceAccount1.setCounterpart(insuranceCompany);
+        insuranceAccount2.setCounterpart(insuranceCompany);
 
-        insuranceCompany = counterpartyService.save(insuranceCompany);
+        insuranceCompany = counterpartService.save(insuranceCompany);
 
 
 
@@ -134,7 +134,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .account(myAccount)
                 .type(TransactionType.DEBIT)
                 .amount(MY_SALARY_AMOUNT)
-                .counterparty(employer)
+                .counterpart(employer)
                 .counterPartyAccount(employerAccount)
                 .text(MY_SALARY_TRANSACTION_TEXT)
                 .bookingDate(MY_SALARY_BOOKING_DATE)
@@ -145,7 +145,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .account(myAccount)
                 .type(TransactionType.CREDIT)
                 .amount(MY_INSURANCE_PREMIUM)
-                .counterparty(insuranceCompany)
+                .counterpart(insuranceCompany)
                 .counterPartyAccount(insuranceAccount1)
                 .text(MY_INSURANCE_TRANSACTION_TEXT)
                 .bookingDate(MY_INSURANCE_BOOKING_DATE)
