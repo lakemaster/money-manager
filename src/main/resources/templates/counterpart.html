@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Money Manager</title>
-    <link rel="stylesheet" href="/lib/skeleton/normalize.css" />
-    <link rel="stylesheet" href="/lib/skeleton/skeleton.css" />
-    <link rel="stylesheet" href="/style.css" />
+<head th:replace="fragments/general.html :: headerfiles">
 </head>
 <body>
     <div class="container">
-        <ul class="navigation">
-            <li class="navigation-item">
-                <a href="/">Start</a>
-            </li>
-        </ul>
-        <div style="clear: both">&nbsp;</div>
+        <header th:insert="fragments/general.html :: header"> </header>
 
-        <h1>My Money Manager</h1>
         <!--/*@thymesVar id="counterpart" type="com.jojobi.mm.model.Counterpart"*/-->
         <!--/*@thymesVar id="account" type="com.jojobi.mm.info.Account"*/-->
         <h2 th:text="${'Counterpart: ' + counterpart.getName()}">Grocer's Shop</h2>
