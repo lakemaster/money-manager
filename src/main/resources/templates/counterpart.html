@@ -33,7 +33,7 @@
                 </td>
                 <td>
                     <a th:text="${counterpartService.getNumberOfTransactions(account)}"
-                       th:href="@{'/transactions/' + ${account.getId()}} + '?foreign=true'">
+                       th:href="@{'/transactions/' + ${account.getId()} + '?foreign=true'}">
                         12
                     </a>
                 </td>

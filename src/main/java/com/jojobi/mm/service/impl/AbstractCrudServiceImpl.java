@@ -28,6 +28,6 @@ public abstract class AbstractCrudServiceImpl<T, ID, REPO extends CrudRepository
 
     @Override
     public T save(T obj) {
-        return (T) repo.save(obj);
+        return repo.save(obj);
     }
 }

@@ -54,9 +54,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static final String CP_INSURANCE_ACCOUNT2_ISIN = "SE9876543219876";
 
 
-    private AccountService accountService;
-    private CounterpartService counterpartService;
-    private TransactionService transactionService;
+    private final AccountService accountService;
+    private final CounterpartService counterpartService;
+    private final TransactionService transactionService;
 
     public TestDataLoader(AccountService accountService, CounterpartService counterpartService, TransactionService transactionService) {
         this.accountService = accountService;
