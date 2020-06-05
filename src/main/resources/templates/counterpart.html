@@ -8,13 +8,23 @@
 
         <!--/*@thymesVar id="counterpart" type="com.jojobi.mm.model.Counterpart"*/-->
         <!--/*@thymesVar id="account" type="com.jojobi.mm.info.Account"*/-->
-        <h2 th:text="${'Counterpart: ' + counterpart.getName()}">Grocer's Shop</h2>
+        <h3>
+            Counterpart:
+            <span th:text="${counterpart.getName()}">Grocer's Shop</span>
+        </h3>
 
-        <p th:text="${'Creditor Id: ' + counterpart.getCreditorId()}">Creditor Id: DE873VVV0987598762</p>
-        <p th:text="${'Number of Transactions: ' + counterpartService.getNumberOfTransactions(counterpart)}">Number of Transactions: 12</p>
+        Creditor Id:
+        <div th:text="${counterpart.getCreditorId()}">DE873VVV0987598762</div>
+
+        Transactions:
+        <a th:text="${counterpartService.getNumberOfTransactions(counterpart)}"
+           th:href="@{'/transactions/counterpart/' + ${counterpart.getId()}}">
+            42
+        </a>
+
         <br>
-
-        <p>Accounts:</p>
+        <br>
+        <strong>Accounts: </strong>
         <table id="accounts" class="u-full-width">
             <thead>
             <tr>

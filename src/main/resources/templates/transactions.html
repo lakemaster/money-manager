@@ -9,7 +9,10 @@
         <!--/*@thymesVar id="account" type="com.jojobi.mm.model.Account"*/-->
         <!--/*@thymesVar id="transactions" type="java.util.List"*/-->
         <!--/*@thymesVar id="transaction" type="com.jojobi.mm.model.Transaction"*/-->
-        <h2 th:text="${'List of Transactions on account: ' + account.getIsin()}">List of Transactions on account: DE983216464912143</h2>
+        <h3>
+            Transactions on account:
+            <span th:text="${account.getIsin()}">DE983216464912143</span>
+        </h3>
 
         <table id="transactions" class="u-full-width">
             <thead>
