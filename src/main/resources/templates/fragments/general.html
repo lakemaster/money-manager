@@ -8,14 +8,20 @@
     <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-    <div th:fragment="header">
-        <ul class="navigation">
-            <li class="navigation-item">
-                <a href="/">My Accounts</a>
-            </li>
-        </ul>
-        <div style="clear: both">&nbsp;</div>
-        <h1>JoJoBi's Money Manager</h1>
+    <div class="container" th:fragment="header">
+        <div class="row">
+            <div class="ten columns">
+                <ul class="navigation">
+                    <li class="navigation-item">
+                        <a href="/">My Accounts</a>
+                    </li>
+                </ul>
+                <div style="clear: both">&nbsp;</div>
+            </div>
+            <div class="two columns">
+                <img src="images/logo.png" alt="JoJoBi's Money Manager" width="255" height="135">
+            </div>
+        </div>
     </div>
 
 </body>
