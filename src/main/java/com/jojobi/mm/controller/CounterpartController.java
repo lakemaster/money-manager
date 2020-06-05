@@ -34,7 +34,7 @@ public class CounterpartController {
         }
 
         model.addAttribute("counterpart", counterpart);
-        //model.addAttribute("transactions", transactionService.findAllByAccount(account));
+        model.addAttribute("counterpartService", counterpartService);
 
         return "counterpart";
     }

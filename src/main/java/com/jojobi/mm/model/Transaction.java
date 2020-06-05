@@ -28,12 +28,12 @@ public class Transaction extends BaseEntity {
     private Counterpart counterpart;
 
     @ManyToOne
-    private Account counterPartyAccount;
+    private Account counterpartAccount;
 
     @Builder
     public Transaction(Long id, LocalDate valueDate, LocalDate bookingDate, TransactionType type,
                        String text, Double amount, String mandate, String customerReference, Account account,
-                       Counterpart counterpart, Account counterPartyAccount) {
+                       Counterpart counterpart, Account counterpartAccount) {
         super(id);
         this.valueDate = valueDate;
         this.bookingDate = bookingDate;
@@ -44,6 +44,6 @@ public class Transaction extends BaseEntity {
         this.customerReference = customerReference;
         this.account = account;
         this.counterpart = counterpart;
-        this.counterPartyAccount = counterPartyAccount;
+        this.counterpartAccount = counterpartAccount;
     }
 }

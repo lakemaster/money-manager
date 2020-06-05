@@ -11,6 +11,7 @@
         <h2 th:text="${'Counterpart: ' + counterpart.getName()}">Grocer's Shop</h2>
 
         <p th:text="${'Creditor Id: ' + counterpart.getCreditorId()}">Creditor Id: DE873VVV0987598762</p>
+        <p th:text="${'Number of Transactions: ' + counterpartService.getNumberOfTransactions(counterpart)}">Number of Transactions: 12</p>
         <br>
 
         <p>Accounts:</p>
@@ -19,19 +20,26 @@
             <tr>
                 <th>ISIN</th>
                 <th>BIC</th>
+                <th>Transactions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="account: ${counterpart.getAccounts()}">
+                <td th:text="${account.getIsin()}">
+                    DE12345678901234
+                </td>
+                <td th:text="${account.getBic()}">
+                    LESWEAXXXX
+                </td>
                 <td>
-                    <a th:text="${account.getIsin()}" th:href="@{'/transactions/' + ${account.getId()}}">DE12345678901234
+                    <a th:text="${counterpartService.getNumberOfTransactions(account)}"
+                       th:href="@{'/transactions/' + ${account.getId()}} + '?foreign=true'">
+                        12
                     </a>
                 </td>
-                <td th:text="${account.getBic()}">LESWEAXXXX</td>
             </tr>
             </tbody>
         </table>
-
     </div>
 </body>
 </html>

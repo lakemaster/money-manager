@@ -103,8 +103,8 @@ class MoneyManagerApplicationTests {
         Counterpart employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(tr1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(tr1.getCounterpart()).isEqualTo(employer);
-        assertThat(tr1.getCounterPartyAccount().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ID);
-        assertThat(tr1.getCounterPartyAccount()).isEqualTo(employer.getAccounts().get(0));
+        assertThat(tr1.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ID);
+        assertThat(tr1.getCounterpartAccount()).isEqualTo(employer.getAccounts().get(0));
 
         Transaction tr2 = transactions.get(1);
         assertThat(tr2.getAccount().getId()).isEqualTo(myAccount.getId());
@@ -118,8 +118,8 @@ class MoneyManagerApplicationTests {
         Counterpart insuranceCompany = counterpartService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(tr2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(tr2.getCounterpart()).isEqualTo(insuranceCompany);
-        assertThat(tr2.getCounterPartyAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);
-        assertThat(tr2.getCounterPartyAccount()).isEqualTo(insuranceCompany.getAccounts().get(0));
+        assertThat(tr2.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);
+        assertThat(tr2.getCounterpartAccount()).isEqualTo(insuranceCompany.getAccounts().get(0));
 
 
     }
