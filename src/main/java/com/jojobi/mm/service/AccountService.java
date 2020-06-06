@@ -12,4 +12,5 @@ public interface AccountService extends CrudService<Account, Long> {
 
     AccountInfo getAccountInfo(Account account);
 
+    List<AccountInfo> getAccountInfos(List<Account> accounts);
 }

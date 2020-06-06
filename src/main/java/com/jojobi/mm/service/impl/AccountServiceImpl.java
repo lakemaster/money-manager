@@ -9,6 +9,7 @@ import com.jojobi.mm.service.TransactionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl extends AbstractCrudServiceImpl<Account, Long, AccountRepo> implements AccountService {
@@ -38,5 +39,10 @@ public class AccountServiceImpl extends AbstractCrudServiceImpl<Account, Long, A
         }
 
         return accountInfo;
+    }
+
+    @Override
+    public List<AccountInfo> getAccountInfos(List<Account> accounts) {
+        return accounts.stream().map(this::getAccountInfo).collect(Collectors.toList());
     }
 }

@@ -28,11 +28,9 @@ public class IndexController {
     public String getIndexPage(Model model) {
         log.debug("Getting index page");
         Counterpart myself = counterpartService.findById(1L);
-        List<AccountInfo> accountInfos = new ArrayList<>();
-        myself.getAccounts().forEach(account -> accountInfos.add(accountService.getAccountInfo(account)));
 
         model.addAttribute("myself", myself);
-        model.addAttribute("accountInfos", accountInfos);
+        model.addAttribute("accountInfos", accountService.getAccountInfos(myself.getAccounts()));
         return "index";
     }
 }
