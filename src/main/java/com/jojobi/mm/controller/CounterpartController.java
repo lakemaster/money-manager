@@ -39,7 +39,6 @@ public class CounterpartController {
                                             @PathVariable("counterpart_id") Long counterpartId, Model model) {
 
         log.debug("Handle counterpart page request, counterpart_id = {}", counterpartId);
-        headers.forEach((key, value) -> log.info("Header '{}' = '{}'", key, value));
 
         Counterpart counterpart = counterpartService.findById(counterpartId);
         if ( counterpart == null ) {

@@ -54,13 +54,13 @@ public class TransactionsController {
 
         Counterpart counterpart = null;
         Account counterpartAccount = null;
-        if ( counterpartId != null && counterpartId.longValue() > 0 ) {
+        if ( counterpartId != null && counterpartId > 0 ) {
             counterpart = counterpartService.findById(counterpartId);
             if ( counterpart == null ) {
                 throw new NotFoundException("Counterpart id=" + counterpartId + " not found");
             }
             if ( counterpartAccountId != null && counterpartAccountId > 0 ) {
-                counterpartAccount = accountService.findById(accountId);
+                counterpartAccount = accountService.findById(counterpartAccountId);
                 if ( counterpartAccount == null ) {
                     throw new NotFoundException("Counterpart Account id=" + counterpartAccountId + " not found");
                 }
