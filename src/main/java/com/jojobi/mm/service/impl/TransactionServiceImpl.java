@@ -11,24 +11,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TransactionServiceImpl extends AbstractCrudServiceImpl<Transaction, Long, TransactionRepo> implements TransactionService {
+public class TransactionServiceImpl extends AbstractCrudServiceImpl<Transaction, Long, TransactionRepo>
+        implements TransactionService {
 
     public TransactionServiceImpl(TransactionRepo transactionRepo) {
         super(transactionRepo);
     }
 
     @Override
-    public List<Transaction> findAllByAccount(Account account) {
-        return IterableUtils.toList(repo.findAllByAccountOrderByValueDate(account));
-    }
+    public List<Transaction> findAllByAccount(Account account, Counterpart counterpart, Account counterpartAccount) {
 
-    @Override
-    public List<Transaction> findAllByCounterpart(Counterpart counterpart) {
-        return IterableUtils.toList(repo.findAllByCounterpartOrderByValueDate(counterpart));
-    }
+        Iterable<Transaction> transactions;
+        if ( counterpart != null && counterpartAccount != null ) {
+            transactions = repo.findAllByAccountAndCounterpartAndCounterpartAccountOrderByValueDate(
+                    account, counterpart, counterpartAccount);
+        } else if ( counterpart != null ) {
+            transactions = repo.findAllByAccountAndCounterpartOrderByValueDate(account, counterpart);
+        } else {
+            transactions = repo.findAllByAccountOrderByValueDate(account);
+        }
 
-    @Override
-    public List<Transaction> findAllByForeignAccount(Account account) {
-        return IterableUtils.toList(repo.findAllByCounterpartAccountOrderByValueDate(account));
+        return IterableUtils.toList(transactions);
     }
 }

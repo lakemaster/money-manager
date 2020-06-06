@@ -8,9 +8,14 @@ import java.util.List;
 
 public interface TransactionService extends CrudService<Transaction, Long> {
 
-    List<Transaction> findAllByAccount(Account account);
+    List<Transaction> findAllByAccount(Account account, Counterpart counterpart, Account counterpartAccount);
 
-    List<Transaction> findAllByCounterpart(Counterpart counterpart);
+    default List<Transaction> findAllByAccount(Account account) {
+        return  findAllByAccount(account, null, null);
+    }
 
-    List<Transaction> findAllByForeignAccount(Account account);
+    default List<Transaction> findAllByAccount(Account account, Counterpart counterpart) {
+        return  findAllByAccount(account, counterpart, null);
+    }
+
 }

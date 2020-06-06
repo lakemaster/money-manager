@@ -10,7 +10,8 @@ public interface TransactionRepo extends CrudRepository<Transaction, Long> {
 
     Iterable<Transaction> findAllByAccountOrderByValueDate(Account account);
 
-    Iterable<Transaction> findAllByCounterpartOrderByValueDate(Counterpart counterpart);
+    Iterable<Transaction> findAllByAccountAndCounterpartOrderByValueDate(Account account, Counterpart counterpart);
 
-    Iterable<Transaction> findAllByCounterpartAccountOrderByValueDate(Account account);
+    Iterable<Transaction> findAllByAccountAndCounterpartAndCounterpartAccountOrderByValueDate(
+            Account account, Counterpart counterpart, Account counterpartAccount);
 }

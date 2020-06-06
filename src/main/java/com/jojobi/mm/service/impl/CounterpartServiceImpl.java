@@ -21,12 +21,7 @@ public class CounterpartServiceImpl extends AbstractCrudServiceImpl<Counterpart,
     }
 
     @Override
-    public long getNumberOfTransactions(Counterpart counterpart) {
-        return transactionService.findAllByCounterpart(counterpart).size();
-    }
-
-    @Override
-    public long getNumberOfTransactions(Account account) {
-        return transactionService.findAllByForeignAccount(account).size();
+    public long getNumberOfTransactions(Account myAccount, Counterpart counterpart, Account counterpartAccount) {
+        return transactionService.findAllByAccount(myAccount, counterpart, counterpartAccount).size();
     }
 }
