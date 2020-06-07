@@ -16,6 +16,7 @@ public class Account extends BaseEntity {
     private String isin;
     private String bic;
 
+    //todo: rename to owner
     @ManyToOne
     private Counterpart counterpart;
 

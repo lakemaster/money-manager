@@ -53,6 +53,7 @@ public class CounterpartController {
 
     @ModelAttribute("myAccount")
     public Account populateMyAccount() {
-        return sessionParameters.getMyAccountId().map(accountService::findById).orElse(null);
+        Account account = sessionParameters.getMyAccountId().map(accountService::findById).orElse(null);
+        return account;
     }
 }

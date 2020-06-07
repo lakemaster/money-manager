@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService extends CrudService<Account, Long> {
+
     Account findAccountByIsin(String isin);
 
     AccountInfo getAccountInfo(Account account);

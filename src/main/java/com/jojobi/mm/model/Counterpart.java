@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -21,13 +22,13 @@ public class Counterpart extends BaseEntity {
     private String creditorId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "counterpart", fetch = FetchType.EAGER)
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @Builder
     public Counterpart(Long id, String name, String creditorId, List<Account> accounts) {
         super(id);
         this.name = name;
         this.creditorId = creditorId;
-        this.accounts = new ArrayList<>(accounts);
+        this.accounts = Optional.ofNullable(accounts).orElse(this.accounts);
     }
 }
