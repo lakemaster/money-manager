@@ -37,30 +37,23 @@ class CounterpartControllerIntegrationTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private SessionParameters sessionParameters;
-
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
+    private MockHttpSession mockHttpSession;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        //SessionParameters sessionParameters = (SessionParameters) webApplicationContext.getBean("sessionParameters");
+        SessionParameters sessionParameters = new SessionParameters();
         sessionParameters.setMyAccountId(TestDataLoader.MYSELF_ACCOUNT_ID);
+        mockHttpSession = new MockHttpSession();
+        mockHttpSession.setAttribute("scopedTarget.sessionParameters", sessionParameters);
     }
 
-    @Disabled
     @Test
     public void testHandleCounterpartRequestSuccessfully() throws Exception {
 
-//        SessionParameters sessionParameters = (SessionParameters) webApplicationContext.getBean("sessionParameters");
-//        sessionParameters.setMyAccountId(TestDataLoader.MYSELF_ACCOUNT_ID);
-//        MockHttpSession mockHttpSession = new MockHttpSession();
-//        mockHttpSession.setAttribute("sessionParameters", sessionParameters);
-
         mockMvc.perform(get("/counterpart/" + TestDataLoader.CP_EMPLOYER_ID)
-                //.session(mockHttpSession)
-                )
+                .session(mockHttpSession))
                 .andExpect(status().isOk())
                 .andExpect(view().name("counterpart"))
                 .andExpect(model().attribute("myAccount", instanceOf(Account.class)))
