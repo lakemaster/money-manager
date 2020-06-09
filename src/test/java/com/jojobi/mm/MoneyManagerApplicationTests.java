@@ -45,14 +45,14 @@ class MoneyManagerApplicationTests {
         Account acc1 = insuranceCompany.getAccounts().get(0);
         assertThat(acc1.getBic()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_BIC);
         assertThat(acc1.getIsin()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ISIN);
-        assertThat(acc1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(acc1.getCounterpart()).isEqualTo(insuranceCompany);
+        assertThat(acc1.getOwner().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(acc1.getOwner()).isEqualTo(insuranceCompany);
 
         Account acc2 = insuranceCompany.getAccounts().get(1);
         assertThat(acc2.getBic()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT2_BIC);
         assertThat(acc2.getIsin()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT2_ISIN);
-        assertThat(acc2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(acc2.getCounterpart()).isEqualTo(insuranceCompany);
+        assertThat(acc2.getOwner().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(acc2.getOwner()).isEqualTo(insuranceCompany);
 
         Counterpart employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(employer.getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
@@ -61,8 +61,8 @@ class MoneyManagerApplicationTests {
         Account acc = employer.getAccounts().get(0);
         assertThat(acc.getBic()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_BIC);
         assertThat(acc.getIsin()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ISIN);
-        assertThat(acc.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
-        assertThat(acc.getCounterpart()).isEqualTo(employer);
+        assertThat(acc.getOwner().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
+        assertThat(acc.getOwner()).isEqualTo(employer);
 
         Counterpart myself = counterpartService.findById(TestDataLoader.MYSELF_ID);
         assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
@@ -71,8 +71,8 @@ class MoneyManagerApplicationTests {
         Account myAcc = myself.getAccounts().get(0);
         assertThat(myAcc.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
         assertThat(myAcc.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
-        assertThat(myAcc.getCounterpart().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
-        assertThat(myAcc.getCounterpart()).isEqualTo(myself);
+        assertThat(myAcc.getOwner().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
+        assertThat(myAcc.getOwner()).isEqualTo(myself);
     }
 
     @Test
@@ -81,7 +81,7 @@ class MoneyManagerApplicationTests {
         assertThat(myAccount.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
         assertThat(myAccount.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
 
-        Counterpart myself = myAccount.getCounterpart();
+        Counterpart myself = myAccount.getOwner();
         assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
         assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
         assertThat(myself.getAccounts().size()).isEqualTo(1);

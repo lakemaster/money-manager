@@ -16,16 +16,15 @@ public class Account extends BaseEntity {
     private String isin;
     private String bic;
 
-    //todo: rename to owner
     @ManyToOne
-    private Counterpart counterpart;
+    private Counterpart owner;
 
 
     @Builder
-    public Account(Long id, String isin, String bic, Counterpart counterpart) {
+    public Account(Long id, String isin, String bic, Counterpart owner) {
         super(id);
         this.isin = isin;
         this.bic = bic;
-        this.counterpart = counterpart;
+        this.owner = owner;
     }
 }

@@ -21,7 +21,7 @@ public class Counterpart extends BaseEntity {
     private String name;
     private String creditorId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "counterpart", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Account> accounts = new ArrayList<>();
 
     @Builder

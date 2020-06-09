@@ -84,7 +84,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .accounts(List.of(myAccount))
                 .build();
 
-        myAccount.setCounterpart(myself);
+        myAccount.setOwner(myself);
 
         counterpartService.save(myself);
 
@@ -100,7 +100,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .accounts(List.of(employerAccount))
                 .build();
 
-        employerAccount.setCounterpart(employer);
+        employerAccount.setOwner(employer);
 
         employer = counterpartService.save(employer);
 
@@ -122,8 +122,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .creditorId(CP_INSURANCE_CREDITOR_ID)
                 .build();
 
-        insuranceAccount1.setCounterpart(insuranceCompany);
-        insuranceAccount2.setCounterpart(insuranceCompany);
+        insuranceAccount1.setOwner(insuranceCompany);
+        insuranceAccount2.setOwner(insuranceCompany);
 
         insuranceCompany = counterpartService.save(insuranceCompany);
 
