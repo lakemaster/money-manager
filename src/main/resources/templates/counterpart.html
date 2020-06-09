@@ -22,7 +22,7 @@
 
         Transactions:
         <a th:text="${counterpartService.getNumberOfTransactions(myAccount, counterpart, null)}"
-           th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpartId=' + ${counterpart.getId()}}">
+           th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${counterpart.getId()}}">
             42
         </a>
 
@@ -47,7 +47,7 @@
                 </td>
                 <td>
                     <a th:text="${counterpartService.getNumberOfTransactions(myAccount, counterpart, account)}"
-                       th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpartId=' + ${counterpart.getId()} + '&counterpartAccountId=' + ${account.getId()}}">
+                       th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${counterpart.getId()} + '&counterpart_account_id=' + ${account.getId()}}">
                         12
                     </a>
                 </td>

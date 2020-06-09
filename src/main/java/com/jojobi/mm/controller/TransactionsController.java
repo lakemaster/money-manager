@@ -39,10 +39,10 @@ public class TransactionsController {
 
     @GetMapping("/{account_id}")
     private String handleTransactionsRequest(@PathVariable("account_id") Long accountId,
-                                             @RequestParam(name = "counterpartId", required = false) Long counterpartId,
-                                             @RequestParam(name = "counterpartAccountId", required = false) Long counterpartAccountId,
+                                             @RequestParam(name = "counterpart_id", required = false) Long counterpartId,
+                                             @RequestParam(name = "counterpart_account_id", required = false) Long counterpartAccountId,
                                              Model model) {
-        log.debug("Handle transaction page request, account_id={}, counterpartId={}, counterpartAccountId={}",
+        log.debug("Handle transaction page request, account_id={}, counterpart_id={}, counterpart_account_id={}",
                 accountId, counterpartId, counterpartAccountId);
 
         sessionParameters.setMyAccountId(accountId);
