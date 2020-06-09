@@ -2,7 +2,7 @@ package com.jojobi.mm.controller;
 
 import com.jojobi.mm.exception.NotFoundException;
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.AccountService;
 import com.jojobi.mm.service.CounterpartService;
 import com.jojobi.mm.service.TransactionService;
@@ -52,11 +52,11 @@ public class TransactionsController {
             throw new NotFoundException("Account id=" + accountId + " not found");
         }
 
-        Counterpart counterpart = null;
+        LegalEntity legalEntity = null;
         Account counterpartAccount = null;
         if ( counterpartId != null && counterpartId > 0 ) {
-            counterpart = counterpartService.findById(counterpartId);
-            if ( counterpart == null ) {
+            legalEntity = counterpartService.findById(counterpartId);
+            if ( legalEntity == null ) {
                 throw new NotFoundException("Counterpart id=" + counterpartId + " not found");
             }
             if ( counterpartAccountId != null && counterpartAccountId > 0 ) {
@@ -68,7 +68,7 @@ public class TransactionsController {
         }
 
         model.addAttribute("account", account);
-        model.addAttribute("transactions", transactionService.findAllByAccount(account, counterpart, counterpartAccount));
+        model.addAttribute("transactions", transactionService.findAllByAccount(account, legalEntity, counterpartAccount));
 
         return "transactions";
     }

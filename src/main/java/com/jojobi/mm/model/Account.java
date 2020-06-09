@@ -17,11 +17,11 @@ public class Account extends BaseEntity {
     private String bic;
 
     @ManyToOne
-    private Counterpart owner;
+    private LegalEntity owner;
 
 
     @Builder
-    public Account(Long id, String isin, String bic, Counterpart owner) {
+    public Account(Long id, String isin, String bic, LegalEntity owner) {
         super(id);
         this.isin = isin;
         this.bic = bic;

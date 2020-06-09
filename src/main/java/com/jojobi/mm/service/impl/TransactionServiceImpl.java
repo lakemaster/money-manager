@@ -1,7 +1,7 @@
 package com.jojobi.mm.service.impl;
 
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.repo.TransactionRepo;
 import com.jojobi.mm.service.TransactionService;
@@ -19,14 +19,14 @@ public class TransactionServiceImpl extends AbstractCrudServiceImpl<Transaction,
     }
 
     @Override
-    public List<Transaction> findAllByAccount(Account account, Counterpart counterpart, Account counterpartAccount) {
+    public List<Transaction> findAllByAccount(Account account, LegalEntity legalEntity, Account counterpartAccount) {
 
         Iterable<Transaction> transactions;
-        if ( counterpart != null && counterpartAccount != null ) {
+        if ( legalEntity != null && counterpartAccount != null ) {
             transactions = repo.findAllByAccountAndCounterpartAndCounterpartAccountOrderByValueDate(
-                    account, counterpart, counterpartAccount);
-        } else if ( counterpart != null ) {
-            transactions = repo.findAllByAccountAndCounterpartOrderByValueDate(account, counterpart);
+                    account, legalEntity, counterpartAccount);
+        } else if ( legalEntity != null ) {
+            transactions = repo.findAllByAccountAndCounterpartOrderByValueDate(account, legalEntity);
         } else {
             transactions = repo.findAllByAccountOrderByValueDate(account);
         }

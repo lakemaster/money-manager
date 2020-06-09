@@ -28,8 +28,8 @@
                 <tr th:each="transaction: ${transactions}">
                     <td th:text="${transaction.getType()}">Debit</td>
                     <td>
-                        <a th:text="${transaction.getCounterpart().getName()}"
-                           th:href="@{'/counterpart/' + ${transaction.getCounterpart().getId()}}">Grocer's Shop
+                        <a th:text="${transaction.getLegalEntity().getName()}"
+                           th:href="@{'/legalEntity/' + ${transaction.getLegalEntity().getId()}}">Grocer's Shop
                         </a>
                     </td>
 

@@ -16,7 +16,7 @@ import java.util.Optional;
 @ToString(callSuper = true, exclude = "accounts")
 @EqualsAndHashCode(callSuper = true, exclude = "accounts")
 @Entity
-public class Counterpart extends BaseEntity {
+public class LegalEntity extends BaseEntity {
 
     private String name;
     private String creditorId;
@@ -25,7 +25,7 @@ public class Counterpart extends BaseEntity {
     private List<Account> accounts = new ArrayList<>();
 
     @Builder
-    public Counterpart(Long id, String name, String creditorId, List<Account> accounts) {
+    public LegalEntity(Long id, String name, String creditorId, List<Account> accounts) {
         super(id);
         this.name = name;
         this.creditorId = creditorId;

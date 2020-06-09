@@ -1,7 +1,7 @@
 package com.jojobi.mm.repo;
 
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CounterpartRepo extends CrudRepository<Counterpart, Long> {
+public interface CounterpartRepo extends CrudRepository<LegalEntity, Long> {
 }

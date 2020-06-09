@@ -2,7 +2,7 @@ package com.jojobi.mm.controller;
 
 import com.jojobi.mm.bootstrap.TestDataLoader;
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.CounterpartService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-class CounterpartControllerITest extends AbstractControllerITest {
+class LegalEntityControllerITest extends AbstractControllerITest {
 
     @Test
     public void testHandleCounterpartRequestSuccessfully() throws Exception {
@@ -27,7 +27,7 @@ class CounterpartControllerITest extends AbstractControllerITest {
             .andExpect(status().isOk())
             .andExpect(view().name("counterpart"))
             .andExpect(model().attribute("myAccount", instanceOf(Account.class)))
-            .andExpect(model().attribute("counterpart", instanceOf(Counterpart.class)))
+            .andExpect(model().attribute("counterpart", instanceOf(LegalEntity.class)))
             .andExpect(model().attribute("counterpartService", instanceOf(CounterpartService.class)));
     }
 }

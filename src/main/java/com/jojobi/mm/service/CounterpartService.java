@@ -1,8 +1,8 @@
 package com.jojobi.mm.service;
 
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 
-public interface CounterpartService extends CrudService<Counterpart, Long> {
-    long getNumberOfTransactions(Account account, Counterpart counterpart, Account counterpartAccount);
+public interface CounterpartService extends CrudService<LegalEntity, Long> {
+    long getNumberOfTransactions(Account account, LegalEntity legalEntity, Account counterpartAccount);
 }

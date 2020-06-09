@@ -1,7 +1,7 @@
 package com.jojobi.mm.bootstrap;
 
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.model.TransactionType;
 import com.jojobi.mm.service.AccountService;
@@ -79,7 +79,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .isin(MYSELF_ACCOUNT_ISIN)
                 .build();
 
-        Counterpart myself = Counterpart.builder()
+        LegalEntity myself = LegalEntity.builder()
                 .name(MYSELF_NAME)
                 .accounts(List.of(myAccount))
                 .build();
@@ -95,7 +95,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .isin(CP_EMPLOYER_ACCOUNT_ISIN)
                 .build();
 
-        Counterpart employer = Counterpart.builder()
+        LegalEntity employer = LegalEntity.builder()
                 .name(CP_EMPLOYER_NAME)
                 .accounts(List.of(employerAccount))
                 .build();
@@ -116,7 +116,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .isin(CP_INSURANCE_ACCOUNT2_ISIN)
                 .build();
 
-        Counterpart insuranceCompany = Counterpart.builder()
+        LegalEntity insuranceCompany = LegalEntity.builder()
                 .name(CP_INSURANCE_COMPANY_NAME)
                 .accounts(List.of(insuranceAccount1, insuranceAccount2))
                 .creditorId(CP_INSURANCE_CREDITOR_ID)

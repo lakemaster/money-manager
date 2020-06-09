@@ -1,7 +1,7 @@
 package com.jojobi.mm.controller;
 
 import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.Counterpart;
+import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.AccountService;
 import com.jojobi.mm.service.CounterpartService;
 import com.jojobi.mm.service.TransactionService;
@@ -22,12 +22,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class CounterpartControllerTest {
+class LegalEntityControllerTest {
 
     Long accountId = 1L;
     Account account = Account.builder().id(accountId).isin("ABC123").bic("XYZ789").build();
     Long counterpartId = 2L;
-    Counterpart counterpart = Counterpart.builder().id(counterpartId).name("abc").creditorId("xyz").build();
+    LegalEntity legalEntity = LegalEntity.builder().id(counterpartId).name("abc").creditorId("xyz").build();
 
     @Mock
     SessionParameters sessionParameters;
@@ -53,13 +53,13 @@ class CounterpartControllerTest {
 
         Mockito.when(sessionParameters.getMyAccountId()).thenReturn(Optional.of(accountId));
         Mockito.when(accountService.findById(eq(accountId))).thenReturn(account);
-        Mockito.when(counterpartService.findById(eq(counterpartId))).thenReturn(counterpart);
+        Mockito.when(counterpartService.findById(eq(counterpartId))).thenReturn(legalEntity);
 
         mockMvc.perform(get("/counterpart/" + counterpartId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("counterpart"))
                 .andExpect(model().attribute("myAccount", equalTo(account)))
-                .andExpect(model().attribute("counterpart", equalTo(counterpart)))
+                .andExpect(model().attribute("counterpart", equalTo(legalEntity)))
                 .andExpect(model().attribute("counterpartService", is(counterpartService)));
     }
 }
