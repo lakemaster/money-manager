@@ -29,7 +29,7 @@
                     <td th:text="${transaction.getType()}">Debit</td>
                     <td>
                         <a th:text="${transaction.getCounterpart().getName()}"
-                           th:href="@{'/legalEntity/' + ${transaction.getCounterpart().getId()}}">Grocer's Shop
+                           th:href="@{'/counterpart/' + ${transaction.getCounterpart().getId()}}">Grocer's Shop
                         </a>
                     </td>
 

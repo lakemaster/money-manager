@@ -7,22 +7,22 @@
         <header th:insert="fragments/general.html :: header"> </header>
 
         <!--/*-->
-        <!--@thymesVar id="legalEntity" type="com.jojobi.mm.model.LegalEntity"-->
+        <!--@thymesVar id="counterpart" type="com.jojobi.mm.model.LegalEntity"-->
         <!--@thymesVar id="account" type="com.jojobi.mm.info.Account"-->
         <!--@thymesVar id="myAccount" type="com.jojobi.mm.info.Account"-->
         <!--*/-->
 
         <h3>
             Counterpart:
-            <span th:text="${legalEntity.getName()}">Grocer's Shop</span>
+            <span th:text="${counterpart.getName()}">Grocer's Shop</span>
         </h3>
 
         Creditor Id:
-        <div th:text="${legalEntity.getCreditorId()}">DE873VVV0987598762</div>
+        <div th:text="${counterpart.getCreditorId()}">DE873VVV0987598762</div>
 
         Transactions:
-        <a th:text="${counterpartService.getNumberOfTransactions(myAccount, legalEntity, null)}"
-           th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${legalEntity.getId()}}">
+        <a th:text="${counterpartService.getNumberOfTransactions(myAccount, counterpart, null)}"
+           th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${counterpart.getId()}}">
             42
         </a>
 
@@ -38,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="account: ${legalEntity.getAccounts()}">
+            <tr th:each="account: ${counterpart.getAccounts()}">
                 <td th:text="${account.getIsin()}">
                     DE12345678901234
                 </td>
@@ -46,8 +46,8 @@
                     LESWEAXXXX
                 </td>
                 <td>
-                    <a th:text="${counterpartService.getNumberOfTransactions(myAccount, legalEntity, account)}"
-                       th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${legalEntity.getId()} + '&counterpart_account_id=' + ${account.getId()}}">
+                    <a th:text="${counterpartService.getNumberOfTransactions(myAccount, counterpart, account)}"
+                       th:href="@{'/transactions/' + ${myAccount.getId()} + '?counterpart_id=' + ${counterpart.getId()} + '&counterpart_account_id=' + ${account.getId()}}">
                         12
                     </a>
                 </td>
