@@ -53,6 +53,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static final String CP_INSURANCE_ACCOUNT2_BIC = "XYZDEF6789";
     public static final String CP_INSURANCE_ACCOUNT2_ISIN = "SE9876543219876";
 
+    public static final Long CP_BANK_ID = 4L;
+    public static final String CP_BANK_NAME = "Country Bank";
+    public static final Long CP_BANK_ACCOUNT_ID = 5L;
+    public static final String CP_BANK_ACCOUNT_BIC = "ZIUZDHG187263";
+    public static final String CP_BANK_ACCOUNT_ISIN = "FR9832754928";
+
 
     private final AccountService accountService;
     private final CounterpartService counterpartService;
@@ -75,11 +81,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // myself
         Account myAccount = Account.builder()
+                .id(MYSELF_ACCOUNT_ID)
                 .bic(MYSELF_ACCOUNT_BIC)
                 .isin(MYSELF_ACCOUNT_ISIN)
                 .build();
 
         LegalEntity myself = LegalEntity.builder()
+                .id(MYSELF_ID)
                 .name(MYSELF_NAME)
                 .accounts(List.of(myAccount))
                 .build();
@@ -91,11 +99,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // Counterpart Employer
         Account employerAccount = Account.builder()
+                .id(CP_EMPLOYER_ACCOUNT_ID)
                 .bic(CP_EMPLOYER_ACCOUNT_BIC)
                 .isin(CP_EMPLOYER_ACCOUNT_ISIN)
                 .build();
 
         LegalEntity employer = LegalEntity.builder()
+                .id(CP_EMPLOYER_ID)
                 .name(CP_EMPLOYER_NAME)
                 .accounts(List.of(employerAccount))
                 .build();
@@ -107,16 +117,19 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // Counterpart Insurance Company
         Account insuranceAccount1 = Account.builder()
+                .id(CP_INSURANCE_ACCOUNT1_ID)
                 .bic(CP_INSURANCE_ACCOUNT1_BIC)
                 .isin(CP_INSURANCE_ACCOUNT1_ISIN)
                 .build();
 
         Account insuranceAccount2 = Account.builder()
+                .id(CP_INSURANCE_ACCOUNT2_ID)
                 .bic(CP_INSURANCE_ACCOUNT2_BIC)
                 .isin(CP_INSURANCE_ACCOUNT2_ISIN)
                 .build();
 
         LegalEntity insuranceCompany = LegalEntity.builder()
+                .id(CP_INSURANCE_COMPANY_ID)
                 .name(CP_INSURANCE_COMPANY_NAME)
                 .accounts(List.of(insuranceAccount1, insuranceAccount2))
                 .creditorId(CP_INSURANCE_CREDITOR_ID)
@@ -126,6 +139,23 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         insuranceAccount2.setOwner(insuranceCompany);
 
         insuranceCompany = counterpartService.save(insuranceCompany);
+
+        // Bank
+        Account bankAccount = Account.builder()
+                .id(CP_BANK_ACCOUNT_ID)
+                .bic(CP_BANK_ACCOUNT_BIC)
+                .isin(CP_BANK_ACCOUNT_ISIN)
+                .build();
+
+        LegalEntity bank = LegalEntity.builder()
+                .id(CP_BANK_ID)
+                .name(CP_BANK_NAME)
+                .accounts(List.of(bankAccount))
+                .build();
+
+        bankAccount.setOwner(bank);
+
+        bank = counterpartService.save(bank);
 
 
 
@@ -153,5 +183,41 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .customerReference(MY_INSURANCE_CUSTOMER_REFERENCE)
                 .mandate(MY_INSURANCE_MANDATE)
                 .build());
+
+        Transaction t = Transaction.builder()
+                .account(myAccount)
+                .type(TransactionType.CREDIT)
+                .amount(100d)
+                .counterpart(bank)
+                .counterpartAccount(bankAccount)
+                .text("cash point withdrawal")
+                .bookingDate(LocalDate.of(2020, 1, 20))
+                .valueDate(LocalDate.of(2020, 1, 20))
+                .build();
+
+        transactionService.save(t);
+
+        transactionService.save(Transaction.builder()
+                .account(myAccount)
+                .type(TransactionType.CREDIT)
+                .amount(150d)
+                .counterpart(bank)
+                .counterpartAccount(bankAccount)
+                .text("cash point withdrawal")
+                .bookingDate(LocalDate.of(2020, 1, 23))
+                .valueDate(LocalDate.of(2020, 1, 23))
+                .build());
+
+        transactionService.save(Transaction.builder()
+                .account(myAccount)
+                .type(TransactionType.CREDIT)
+                .amount(50d)
+                .counterpart(bank)
+                .counterpartAccount(bankAccount)
+                .text("cash point withdrawal")
+                .bookingDate(LocalDate.of(2020, 1, 27))
+                .valueDate(LocalDate.of(2020, 1, 27))
+                .build());
+
     }
 }

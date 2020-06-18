@@ -88,7 +88,7 @@ class MoneyManagerApplicationTests {
         assertThat(myself.getAccounts().get(0)).isEqualTo(myAccount);
 
         List<Transaction> transactions = transactionService.findAllByAccount(myAccount);
-        assertThat(transactions.size()).isEqualTo(2);
+        assertThat(transactions.size()).isEqualTo(5);
 
         Transaction tr1 = transactions.get(0);
         assertThat(tr1.getAccount().getId()).isEqualTo(myAccount.getId());
