@@ -4,7 +4,7 @@ import com.jojobi.mm.exception.NotFoundException;
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import com.jojobi.mm.session.SessionParameters;
 import lombok.extern.slf4j.Slf4j;
@@ -22,17 +22,17 @@ public class TransactionsController {
 
     private final SessionParameters sessionParameters;
     private final AccountService accountService;
-    private final CounterpartService counterpartService;
+    private final LegalEntityService legalEntityService;
     private final TransactionService transactionService;
 
 
     public TransactionsController(SessionParameters sessionParameters,
                                   AccountService accountService,
-                                  CounterpartService counterpartService,
+                                  LegalEntityService legalEntityService,
                                   TransactionService transactionService) {
         this.sessionParameters = sessionParameters;
         this.accountService = accountService;
-        this.counterpartService = counterpartService;
+        this.legalEntityService = legalEntityService;
         this.transactionService = transactionService;
     }
 
@@ -55,7 +55,7 @@ public class TransactionsController {
         LegalEntity legalEntity = null;
         Account counterpartAccount = null;
         if ( counterpartId != null && counterpartId > 0 ) {
-            legalEntity = counterpartService.findById(counterpartId);
+            legalEntity = legalEntityService.findById(counterpartId);
             if ( legalEntity == null ) {
                 throw new NotFoundException("Counterpart id=" + counterpartId + " not found");
             }

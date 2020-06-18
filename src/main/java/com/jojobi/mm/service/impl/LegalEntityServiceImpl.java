@@ -3,16 +3,16 @@ package com.jojobi.mm.service.impl;
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.repo.CounterpartRepo;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CounterpartServiceImpl extends AbstractCrudServiceImpl<LegalEntity, Long, CounterpartRepo> implements CounterpartService {
+public class LegalEntityServiceImpl extends AbstractCrudServiceImpl<LegalEntity, Long, CounterpartRepo> implements LegalEntityService {
 
     private final TransactionService transactionService;
 
-    public CounterpartServiceImpl(CounterpartRepo counterpartRepo, TransactionService transactionService) {
+    public LegalEntityServiceImpl(CounterpartRepo counterpartRepo, TransactionService transactionService) {
         super(counterpartRepo);
         this.transactionService = transactionService;
     }

@@ -5,7 +5,7 @@ import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoneyManagerApplicationTests {
 
     @Autowired
-    private CounterpartService counterpartService;
+    private LegalEntityService legalEntityService;
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -31,13 +31,13 @@ class MoneyManagerApplicationTests {
 
     @Test
     void checkCounterparts() {
-        List<LegalEntity> legalEntities = counterpartService.findAll();
+        List<LegalEntity> legalEntities = legalEntityService.findAll();
         assertThat(legalEntities.size()).isGreaterThanOrEqualTo(3);
     }
 
     @Test
     void checkCounterpart() {
-        LegalEntity insuranceCompany = counterpartService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        LegalEntity insuranceCompany = legalEntityService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getName()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_NAME);
 
@@ -53,7 +53,7 @@ class MoneyManagerApplicationTests {
         assertThat(acc2.getOwner().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(acc2.getOwner()).isEqualTo(insuranceCompany);
 
-        LegalEntity employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
+        LegalEntity employer = legalEntityService.findById(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(employer.getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(employer.getName()).isEqualTo(TestDataLoader.CP_EMPLOYER_NAME);
 
@@ -63,7 +63,7 @@ class MoneyManagerApplicationTests {
         assertThat(acc.getOwner().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(acc.getOwner()).isEqualTo(employer);
 
-        LegalEntity myself = counterpartService.findById(TestDataLoader.MYSELF_ID);
+        LegalEntity myself = legalEntityService.findById(TestDataLoader.MYSELF_ID);
         assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
         assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
 
@@ -99,7 +99,7 @@ class MoneyManagerApplicationTests {
         assertThat(tr1.getMandate()).isNullOrEmpty();
         assertThat(tr1.getText()).isEqualTo(TestDataLoader.MY_SALARY_TRANSACTION_TEXT);
 
-        LegalEntity employer = counterpartService.findById(TestDataLoader.CP_EMPLOYER_ID);
+        LegalEntity employer = legalEntityService.findById(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(tr1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
         assertThat(tr1.getCounterpart()).isEqualTo(employer);
         assertThat(tr1.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ID);
@@ -114,7 +114,7 @@ class MoneyManagerApplicationTests {
         assertThat(tr2.getMandate()).isEqualTo(TestDataLoader.MY_INSURANCE_MANDATE);
         assertThat(tr2.getText()).isEqualTo(TestDataLoader.MY_INSURANCE_TRANSACTION_TEXT);
 
-        LegalEntity insuranceCompany = counterpartService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        LegalEntity insuranceCompany = legalEntityService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(tr2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(tr2.getCounterpart()).isEqualTo(insuranceCompany);
         assertThat(tr2.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);

@@ -3,7 +3,7 @@ package com.jojobi.mm.controller;
 import com.jojobi.mm.bootstrap.TestDataLoader;
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,6 +28,6 @@ class LegalEntityControllerITest extends AbstractControllerITest {
             .andExpect(view().name("counterpart"))
             .andExpect(model().attribute("myAccount", instanceOf(Account.class)))
             .andExpect(model().attribute("counterpart", instanceOf(LegalEntity.class)))
-            .andExpect(model().attribute("counterpartService", instanceOf(CounterpartService.class)));
+            .andExpect(model().attribute("legalEntityService", instanceOf(LegalEntityService.class)));
     }
 }

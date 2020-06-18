@@ -3,7 +3,7 @@ package com.jojobi.mm.controller;
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import com.jojobi.mm.session.SessionParameters;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class LegalEntityControllerTest {
     @Mock
     AccountService accountService;
     @Mock
-    CounterpartService counterpartService;
+    LegalEntityService legalEntityService;
     @Mock
     TransactionService transactionService;
 
@@ -45,7 +45,7 @@ class LegalEntityControllerTest {
         MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.standaloneSetup(new CounterpartController(
-                sessionParameters, accountService, counterpartService, transactionService)).build();
+                sessionParameters, accountService, legalEntityService, transactionService)).build();
     }
 
     @Test
@@ -53,13 +53,13 @@ class LegalEntityControllerTest {
 
         Mockito.when(sessionParameters.getMyAccountId()).thenReturn(Optional.of(accountId));
         Mockito.when(accountService.findById(eq(accountId))).thenReturn(account);
-        Mockito.when(counterpartService.findById(eq(counterpartId))).thenReturn(legalEntity);
+        Mockito.when(legalEntityService.findById(eq(counterpartId))).thenReturn(legalEntity);
 
         mockMvc.perform(get("/counterpart/" + counterpartId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("counterpart"))
                 .andExpect(model().attribute("myAccount", equalTo(account)))
                 .andExpect(model().attribute("counterpart", equalTo(legalEntity)))
-                .andExpect(model().attribute("counterpartService", is(counterpartService)));
+                .andExpect(model().attribute("legalEntityService", is(legalEntityService)));
     }
 }

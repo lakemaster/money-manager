@@ -4,7 +4,7 @@ import com.jojobi.mm.exception.NotFoundException;
 import com.jojobi.mm.model.Account;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import com.jojobi.mm.session.SessionParameters;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +21,16 @@ public class CounterpartController {
 
     private final SessionParameters sessionParameters;
     private final AccountService accountService;
-    private final CounterpartService counterpartService;
+    private final LegalEntityService legalEntityService;
     private final TransactionService transactionService;
 
     public CounterpartController(SessionParameters sessionParameters,
                                  AccountService accountService,
-                                 CounterpartService counterpartService,
+                                 LegalEntityService legalEntityService,
                                  TransactionService transactionService) {
         this.sessionParameters = sessionParameters;
         this.accountService = accountService;
-        this.counterpartService = counterpartService;
+        this.legalEntityService = legalEntityService;
         this.transactionService = transactionService;
     }
 
@@ -40,13 +40,13 @@ public class CounterpartController {
 
         log.debug("Handle counterpart page request, counterpart_id = {}", counterpartId);
 
-        LegalEntity legalEntity = counterpartService.findById(counterpartId);
+        LegalEntity legalEntity = legalEntityService.findById(counterpartId);
         if ( legalEntity == null ) {
             throw new NotFoundException("Account id=" + counterpartId + " not found");
         }
 
         model.addAttribute("counterpart", legalEntity);
-        model.addAttribute("counterpartService", counterpartService);
+        model.addAttribute("legalEntityService", legalEntityService);
 
         return "counterpart";
     }

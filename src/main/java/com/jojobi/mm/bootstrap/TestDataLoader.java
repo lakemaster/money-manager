@@ -5,7 +5,7 @@ import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.model.TransactionType;
 import com.jojobi.mm.service.AccountService;
-import com.jojobi.mm.service.CounterpartService;
+import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -61,12 +61,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
 
     private final AccountService accountService;
-    private final CounterpartService counterpartService;
+    private final LegalEntityService legalEntityService;
     private final TransactionService transactionService;
 
-    public TestDataLoader(AccountService accountService, CounterpartService counterpartService, TransactionService transactionService) {
+    public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService) {
         this.accountService = accountService;
-        this.counterpartService = counterpartService;
+        this.legalEntityService = legalEntityService;
         this.transactionService = transactionService;
     }
 
@@ -94,7 +94,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         myAccount.setOwner(myself);
 
-        counterpartService.save(myself);
+        legalEntityService.save(myself);
 
 
         // Counterpart Employer
@@ -112,7 +112,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         employerAccount.setOwner(employer);
 
-        employer = counterpartService.save(employer);
+        employer = legalEntityService.save(employer);
 
 
         // Counterpart Insurance Company
@@ -138,7 +138,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         insuranceAccount1.setOwner(insuranceCompany);
         insuranceAccount2.setOwner(insuranceCompany);
 
-        insuranceCompany = counterpartService.save(insuranceCompany);
+        insuranceCompany = legalEntityService.save(insuranceCompany);
 
         // Bank
         Account bankAccount = Account.builder()
@@ -155,7 +155,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         bankAccount.setOwner(bank);
 
-        bank = counterpartService.save(bank);
+        bank = legalEntityService.save(bank);
 
 
 
