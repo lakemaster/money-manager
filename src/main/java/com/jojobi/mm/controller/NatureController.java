@@ -14,7 +14,7 @@ public class NatureController {
         this.natureService = natureService;
     }
 
-    @GetMapping("/nature")
+    @GetMapping("/natures")
     public String getAllTopLevelNatures(Model model) {
         model.addAttribute("natures", natureService.getAllTopLevelNatures());
         return "natures";
