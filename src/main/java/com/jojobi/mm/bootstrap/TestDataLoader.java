@@ -1,11 +1,9 @@
 package com.jojobi.mm.bootstrap;
 
-import com.jojobi.mm.model.Account;
-import com.jojobi.mm.model.LegalEntity;
-import com.jojobi.mm.model.Transaction;
-import com.jojobi.mm.model.TransactionType;
+import com.jojobi.mm.model.*;
 import com.jojobi.mm.service.AccountService;
 import com.jojobi.mm.service.LegalEntityService;
+import com.jojobi.mm.service.NatureService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -63,21 +61,24 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private final AccountService accountService;
     private final LegalEntityService legalEntityService;
     private final TransactionService transactionService;
+    private final NatureService natureService;
 
-    public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService) {
+    public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService, NatureService natureService) {
         this.accountService = accountService;
         this.legalEntityService = legalEntityService;
         this.transactionService = transactionService;
+        this.natureService = natureService;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("Run {}", this.getClass().getSimpleName());
-        loadTestCounterparts();
 
+        loadTestLegelEntitiesAndTransactions();
+        loadNatures();
     }
 
-    private void loadTestCounterparts() {
+    private void loadTestLegelEntitiesAndTransactions() {
 
         // myself
         Account myAccount = Account.builder()
@@ -219,5 +220,63 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .valueDate(LocalDate.of(2020, 1, 27))
                 .build());
 
+    }
+
+
+    private void loadNatures(){
+
+        Nature retirementProvision = Nature.builder()
+                .name("Retirement Provision")
+                .description("Retirement Provision")
+                .build();
+
+        Nature savings = Nature.builder()
+                .name("Savings")
+                .description("General Savings")
+                .build();
+
+        Nature precaution = Nature.builder()
+                .name("Precaution")
+                .description("General financial precaution")
+                .subNatures(List.of(retirementProvision, savings))
+                .build();
+
+        retirementProvision.setGroup(precaution);
+        savings.setGroup(precaution);
+
+
+        Nature giroCard1 = Nature.builder()
+                .name("Cash Withdrawal GC 1")
+                .description("Cash Withdrawal Girocard 1")
+                .build();
+
+        Nature giroCard2 = Nature.builder()
+                .name("Cash Withdrawal GC 2")
+                .description("Cash Withdrawal Girocard 2")
+                .build();
+
+        Nature masterCard = Nature.builder()
+                .name("Cash Withdrawal MC")
+                .description("Cash Withdrawal Mastercard")
+                .build();
+
+        Nature cashWithdrawal = Nature.builder()
+                .name("Cash Withdrawal")
+                .description("General Cash Withdrawal")
+                .subNatures(List.of(giroCard1, giroCard2, masterCard))
+                .build();
+
+        giroCard1.setGroup(cashWithdrawal);
+        giroCard2.setGroup(cashWithdrawal);
+        masterCard.setGroup(cashWithdrawal);
+
+        Nature insurances = Nature.builder()
+                .name("Insurence")
+                .description("General Insurance Costs")
+                .build();
+
+        natureService.save(precaution);
+        natureService.save(cashWithdrawal);
+        natureService.save(insurances);
     }
 }
