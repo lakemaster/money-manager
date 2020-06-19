@@ -2,10 +2,8 @@ package com.jojobi.mm.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -16,7 +14,11 @@ import javax.persistence.OneToOne;
 public class Nature extends BaseEntity {
 
     private String name;
+    private String description;
 
     @OneToOne
-    private NatureGroup group;
+    private Nature group;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Nature> subNatures;
 }
