@@ -3,7 +3,7 @@ package com.jojobi.mm.bootstrap;
 import com.jojobi.mm.model.*;
 import com.jojobi.mm.service.AccountService;
 import com.jojobi.mm.service.LegalEntityService;
-import com.jojobi.mm.service.NatureService;
+import com.jojobi.mm.service.CategoryService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -61,13 +61,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private final AccountService accountService;
     private final LegalEntityService legalEntityService;
     private final TransactionService transactionService;
-    private final NatureService natureService;
+    private final CategoryService categoryService;
 
-    public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService, NatureService natureService) {
+    public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService, CategoryService categoryService) {
         this.accountService = accountService;
         this.legalEntityService = legalEntityService;
         this.transactionService = transactionService;
-        this.natureService = natureService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -225,58 +225,58 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     private void loadNatures(){
 
-        Nature retirementProvision = Nature.builder()
+        Category retirementProvision = Category.builder()
                 .name("Retirement Provision")
                 .description("Retirement Provision")
                 .build();
 
-        Nature savings = Nature.builder()
+        Category savings = Category.builder()
                 .name("Savings")
                 .description("General Savings")
                 .build();
 
-        Nature precaution = Nature.builder()
+        Category precaution = Category.builder()
                 .name("Precaution")
                 .description("General financial precaution")
-                .subNatures(List.of(retirementProvision, savings))
+                .subCategories(List.of(retirementProvision, savings))
                 .build();
 
         retirementProvision.setGroup(precaution);
         savings.setGroup(precaution);
 
 
-        Nature giroCard1 = Nature.builder()
+        Category giroCard1 = Category.builder()
                 .name("Cash Withdrawal GC 1")
                 .description("Cash Withdrawal Girocard 1")
                 .build();
 
-        Nature giroCard2 = Nature.builder()
+        Category giroCard2 = Category.builder()
                 .name("Cash Withdrawal GC 2")
                 .description("Cash Withdrawal Girocard 2")
                 .build();
 
-        Nature masterCard = Nature.builder()
+        Category masterCard = Category.builder()
                 .name("Cash Withdrawal MC")
                 .description("Cash Withdrawal Mastercard")
                 .build();
 
-        Nature cashWithdrawal = Nature.builder()
+        Category cashWithdrawal = Category.builder()
                 .name("Cash Withdrawal")
                 .description("General Cash Withdrawal")
-                .subNatures(List.of(giroCard1, giroCard2, masterCard))
+                .subCategories(List.of(giroCard1, giroCard2, masterCard))
                 .build();
 
         giroCard1.setGroup(cashWithdrawal);
         giroCard2.setGroup(cashWithdrawal);
         masterCard.setGroup(cashWithdrawal);
 
-        Nature insurances = Nature.builder()
+        Category insurances = Category.builder()
                 .name("Insurence")
                 .description("General Insurance Costs")
                 .build();
 
-        natureService.save(precaution);
-        natureService.save(cashWithdrawal);
-        natureService.save(insurances);
+        categoryService.save(precaution);
+        categoryService.save(cashWithdrawal);
+        categoryService.save(insurances);
     }
 }

@@ -13,22 +13,22 @@ import java.util.Optional;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Nature extends BaseEntity {
+public class Category extends BaseEntity {
 
     private String name;
     private String description;
 
     @OneToOne
-    private Nature group;
+    private Category group;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Nature> subNatures = new ArrayList<>();
+    private List<Category> subCategories = new ArrayList<>();
 
     @Builder
-    public Nature(Long id, String name, String description, Nature group, List<Nature> subNatures) {
+    public Category(Long id, String name, String description, Category group, List<Category> subCategories) {
         super(id);
         this.name = name;
         this.description = description;
-        this.subNatures = Optional.ofNullable(subNatures).orElse(this.subNatures);
+        this.subCategories = Optional.ofNullable(subCategories).orElse(this.subCategories);
     }
 }

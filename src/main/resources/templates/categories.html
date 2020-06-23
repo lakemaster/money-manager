@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general.html :: headerfiles">
+</head>
+<body>
+    <div class="container">
+        <header th:insert="fragments/general.html :: header"> </header>
+
+        <!--/*@thymesVar id="categories" type="java.util.List"*/-->
+        <!--/*@thymesVar id="category" type="com.jojobi.mm.model.Category"*/-->
+        <h3>
+            Transaction Natures:
+        </h3>
+
+        <table id="categories" class="u-full-width">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Number of Sub Categories</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="category: ${categories}">
+                    <td th:text="${category.getName()}">Name of transaction category</td>
+                    <td th:text="${category.getDescription()}">Description of transaction category</td>
+                    <td>
+                        <a th:text="${category.getSubCategories().size()}"
+                           th:href="@{'/category/' + ${category.getId()}}">5
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
