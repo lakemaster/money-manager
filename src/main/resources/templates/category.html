@@ -32,8 +32,11 @@
             <div class="four columns">Sub Categories</div>
             <div class="eight columns">
                 <ul th:each="category: ${categoryInfo.getCategory().getSubCategories()}">
-                    <li th:text="${category.getName()}">Retirement Provision</li>
-                    <li th:remove="all">General Savings</li>
+                    <li>
+                        <a th:text="${category.getName()}"
+                           th:href="@{'/category/' + ${category.getId()}}">Retirement Provision
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
