@@ -33,7 +33,7 @@
             <div class="eight columns">
                 <ul th:each="category: ${categoryInfo.getCategory().getSubCategories()}">
                     <li th:text="${category.getName()}">Retirement Provision</li>
-                    <li th:replace>General Savings</li>
+                    <li th:remove="all">General Savings</li>
                 </ul>
             </div>
         </div>
