@@ -22,13 +22,13 @@
             </thead>
             <tbody>
                 <tr th:each="category: ${categories}">
-                    <td th:text="${category.getName()}">Name of transaction category</td>
-                    <td th:text="${category.getDescription()}">Description of transaction category</td>
                     <td>
-                        <a th:text="${category.getSubCategories().size()}"
-                           th:href="@{'/category/' + ${category.getId()}}">5
+                        <a th:text="${category.getName()}"
+                           th:href="@{'/category/' + ${category.getId()}}">Name of transaction category
                         </a>
                     </td>
+                    <td th:text="${category.getDescription()}">Description of transaction category</td>
+                    <td th:text="${category.getSubCategories().size()}">5</td>
                 </tr>
             </tbody>
         </table>

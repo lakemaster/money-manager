@@ -6,15 +6,28 @@ import com.jojobi.mm.repo.CategoryRepo;
 import com.jojobi.mm.service.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl extends AbstractCrudServiceImpl<Category, Long, CategoryRepo> implements CategoryService {
 
     public CategoryServiceImpl(CategoryRepo categoryRepo) {
         super(categoryRepo);
+    }
+
+    static List<CategoryInfo.PathEntry> getPath(Category category) {
+        List<CategoryInfo.PathEntry> path = new ArrayList<>();
+
+        if (category != null) {
+            for (Category c = category.getGroup(); c != null; c = c.getGroup()) {
+                path.add(new CategoryInfo.PathEntry(c.getName(), c.getId()));
+            }
+        }
+
+        Collections.reverse(path);
+        return path;
     }
 
     @Override
@@ -27,15 +40,4 @@ public class CategoryServiceImpl extends AbstractCrudServiceImpl<Category, Long,
         return repo.findById(categoryId).map(category -> new CategoryInfo(category, getPath(category))).orElse(null);
     }
 
-    static String getPath(Category category) {
-        String path = getSubPath(category.getGroup());
-        return path.isEmpty() ? "/" : path;
-    }
-
-    private static String getSubPath(Category category) {
-        if ( category == null )
-            return "";
-
-        return getSubPath(category.getGroup()) + "/" + category.getName();
-    }
 }
