@@ -29,6 +29,7 @@ public class Category extends BaseEntity {
         super(id);
         this.name = name;
         this.description = description;
+        this.group = group;
         this.subCategories = Optional.ofNullable(subCategories).orElse(this.subCategories);
     }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/general.html :: headerfiles">
+</head>
+<body>
+    <div class="container">
+        <header th:insert="fragments/general.html :: header"> </header>
+
+        <!--/*@thymesVar id="categoryInfo" type="com.jojobi.mm.info.CategoryInfo"*/-->
+        <h3>
+            Transaction Category
+        </h3>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="four columns">Category Name</div>
+            <div class="eight columns" th:text="${categoryInfo.getCategory().getName()}">Precaution</div>
+        </div>
+
+        <div class="row">
+            <div class="four columns">Description</div>
+            <div class="eight columns" th:text="${categoryInfo.getCategory().getDescription()}">General financial precautions</div>
+        </div>
+
+        <div class="row">
+            <div class="four columns">Path</div>
+            <div class="eight columns" th:text="${categoryInfo.getPath()}">/</div>
+        </div>
+
+        <div class="row">
+            <div class="four columns">Sub Categories</div>
+            <div class="eight columns">
+                <ul th:each="category: ${categoryInfo.getCategory().getSubCategories()}">
+                    <li th:text="${category.getName()}">Retirement Provision</li>
+                    <li th:replace>General Savings</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
