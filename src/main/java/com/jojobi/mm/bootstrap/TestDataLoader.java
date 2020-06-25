@@ -7,6 +7,7 @@ import com.jojobi.mm.service.CategoryService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -230,9 +231,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .description("Retirement Provision")
                 .build();
 
+        Category depositAccount = Category.builder()
+                .name("Savings Account")
+                .description("Savings Account")
+                .build();
+
+        Category buildingSaving = Category.builder()
+                .name("Building Saving")
+                .description("Building Saving Contract")
+                .build();
+
         Category savings = Category.builder()
                 .name("Savings")
                 .description("General Savings")
+                .subCategories(List.of(depositAccount, buildingSaving))
                 .build();
 
         Category precaution = Category.builder()
@@ -241,9 +253,10 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .subCategories(List.of(retirementProvision, savings))
                 .build();
 
+        depositAccount.setGroup(savings);
+        buildingSaving.setGroup(savings);
         retirementProvision.setGroup(precaution);
         savings.setGroup(precaution);
-
 
         Category giroCard1 = Category.builder()
                 .name("Cash Withdrawal GC 1")
