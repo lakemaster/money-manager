@@ -10,8 +10,8 @@ import java.util.Optional;
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString(callSuper = false, exclude = {"group", "subCategories"})
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = {"group", "subCategories"})
+@EqualsAndHashCode(callSuper = true, exclude = {"group", "subCategories"})
 @Entity
 public class Category extends BaseEntity {
 
