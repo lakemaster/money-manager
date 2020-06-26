@@ -38,6 +38,9 @@ public class CategoryController {
     @PostMapping("/category")
     public String saveCategory(@ModelAttribute Category category, @RequestParam String action) {
         log.debug("Save Category: action={}, category={}", action, category);
+        if ( action.equals("Save As New")) {
+            category.setId(0L);
+        }
         Category savedCategory = categoryService.save(category);
         log.debug("Category saved: {}", savedCategory);
         return String.format("redirect:/category/%d", savedCategory.getId());
