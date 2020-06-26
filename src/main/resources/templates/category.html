@@ -25,12 +25,14 @@
 
         <div class="row">
             <div class="four columns">Path</div>
-            <span class="eight columns" th:each="pathEntry: ${categoryInfo.getPath()}">
-                <!--div th:text="@{'/' + ${pathEntry.getCategoryName()}}">cat name</div-->
-                <a th:text="@{'/' + ${pathEntry.getCategoryName()}}"
-                   th:href="@{'/category/' + ${pathEntry.getCategoryId()}}">Retirement Provision
-                </a>
-            </span>
+            <div class="eight columns">
+                <div th:each="pathEntry: ${categoryInfo.getPath()}">
+                    <!--div th:text="@{'/' + ${pathEntry.getCategoryName()}}">cat name</div-->
+                    <a th:text="@{'/' + ${pathEntry.getCategoryName()}}"
+                       th:href="@{'/category/' + ${pathEntry.getCategoryId()}}">Retirement Provision
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="row">
