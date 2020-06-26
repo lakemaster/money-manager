@@ -19,4 +19,11 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public BaseEntity merge(BaseEntity entity) {
+        if ( entity.getId() != null ) {
+            this.setId(entity.getId());
+        }
+        return this;
+    }
 }
