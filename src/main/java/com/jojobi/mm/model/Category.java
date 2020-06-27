@@ -33,7 +33,7 @@ public class Category extends BaseEntity {
         this.subCategories = Optional.ofNullable(subCategories).orElse(this.subCategories);
     }
 
-    @Override
+/*    @Override
     public BaseEntity merge(BaseEntity entity) {
         super.merge(entity);
         Category category = (Category)entity;
@@ -47,4 +47,5 @@ public class Category extends BaseEntity {
             setSubCategories(category.getSubCategories());
         return this;
       }
+*/
 }
