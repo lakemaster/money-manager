@@ -32,20 +32,4 @@ public class Category extends BaseEntity {
         this.group = group;
         this.subCategories = Optional.ofNullable(subCategories).orElse(this.subCategories);
     }
-
-/*    @Override
-    public BaseEntity merge(BaseEntity entity) {
-        super.merge(entity);
-        Category category = (Category)entity;
-        if ( category.getName() != null )
-            setName(category.getName());
-        if ( category.getDescription() != null )
-            setDescription(category.getDescription());
-        if ( category.getGroup() != null )
-            setGroup(category.getGroup());
-        if ( category.getSubCategories() != null && category.getSubCategories().size() > 0 )
-            setSubCategories(category.getSubCategories());
-        return this;
-      }
-*/
 }

@@ -30,40 +30,39 @@ public class BaseEntity {
         return (T) this;
     }
 
-    private <T extends BaseEntity, Y extends BaseEntity> void copyFields(T from, Y too) {
-
-        Class<? extends Object> fromClass = from.getClass();
+    private <T extends BaseEntity, Y extends BaseEntity> void copyFields(T fromObj, Y toObj) {
+        Class<? extends Object> fromClass = fromObj.getClass();
         Field[] fromFields = fromClass.getDeclaredFields();
 
-        Class<? extends Object> tooClass = too.getClass();
-        Field[] tooFields = tooClass.getDeclaredFields();
+        Class<? extends Object> toClass = toObj.getClass();
+        Field[] toFields = toClass.getDeclaredFields();
 
-        if (fromFields != null && tooFields != null) {
-            for (Field tooF : tooFields) {
-                log.debug("copy field {}.{} of type {}", tooClass.getSimpleName(), tooF.getName(), tooF.getType().getSimpleName());
+        if (fromFields != null && toFields != null) {
+            for (Field toField : toFields) {
+                log.debug("copy field {}.{} of type {}", toClass.getSimpleName(), toField.getName(), toField.getType().getSimpleName());
                 try {
                     // Check if that fields exists in the other method
-                    Field fromF = fromClass.getDeclaredField(tooF.getName());
-                    if (fromF.getType().equals(tooF.getType())) {
-                        fromF.setAccessible(true);
-                        Object value = fromF.get(from);
+                    Field fromField = fromClass.getDeclaredField(toField.getName());
+                    if (fromField.getType().equals(toField.getType())) {
+                        fromField.setAccessible(true);
+                        Object value = fromField.get(fromObj);
                         // todo: clone not immutable objects
                         if (value != null) {
-                            tooF.setAccessible(true);
+                            toField.setAccessible(true);
                             if (value instanceof List) {
                                 List list = (List) value;
                                 if (list.size() > 0) {
-                                    ((List) tooF.get(too)).clear();
-                                    ((List) tooF.get(too)).add(list);
+                                    ((List) toField.get(toObj)).clear();
+                                    ((List) toField.get(toObj)).add(list);
                                 }
                             } else {
-                                tooF.set(too, value);
+                                toField.set(toObj, value);
                             }
                         }
                     }
                 } catch (SecurityException|NoSuchFieldException|IllegalArgumentException|IllegalAccessException e) {
                     log.error("Error copying field {}.{} during merge operation",
-                            tooClass.getSimpleName(), tooF.getName(), e);
+                            toClass.getSimpleName(), toField.getName(), e);
                 }
             }
         }
