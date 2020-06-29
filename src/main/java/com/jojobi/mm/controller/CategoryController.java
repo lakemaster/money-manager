@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @Slf4j
 @Controller
 public class CategoryController {
@@ -37,13 +38,25 @@ public class CategoryController {
 
     @PostMapping("/category")
     public String saveCategory(@ModelAttribute Category category, @RequestParam String action) {
-        log.debug("Save Category: action={}, category={}", action, category);
+        log.debug("Save {} action={}", category, action);
         if ( action.equals("Save As New")) {
             category.setId(0L);
         }
         Category savedCategory = categoryService.save(category);
         log.debug("Category saved: {}", savedCategory);
         return String.format("redirect:/category/%d", savedCategory.getId());
-       }
+    }
+
+    @GetMapping("/category/{id}/delete")
+    public String deleteCategory(@PathVariable Long id, @RequestParam(required = false) boolean with_subcategories) {
+        Category category = categoryService.findById(id);
+        log.debug("Delete {}, with_subcategories={}", category, with_subcategories);
+        Category parent = category.getGroup();
+        categoryService.delete(category, with_subcategories);
+
+        return parent == null ? "redirect:/categories" :
+                String.format("redirect:/category/%d", parent.getId());
+    }
+
 
 }

@@ -10,4 +10,6 @@ public interface CategoryService extends CrudService<Category, Long> {
     List<Category> getAllTopLevelNatures();
 
     CategoryInfo getCategoryInfo(Long categoryId);
+
+    void delete(Category category, boolean withSubCategories);
 }

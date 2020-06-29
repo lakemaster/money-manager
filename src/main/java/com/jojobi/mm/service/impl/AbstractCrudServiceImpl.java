@@ -3,12 +3,13 @@ package com.jojobi.mm.service.impl;
 import com.jojobi.mm.model.BaseEntity;
 import com.jojobi.mm.service.CrudService;
 import org.apache.commons.collections4.IterableUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class AbstractCrudServiceImpl<T extends BaseEntity, ID, REPO extends CrudRepository<T, ID>> implements CrudService<T, ID> {
+public abstract class AbstractCrudServiceImpl<T extends BaseEntity, ID, REPO extends JpaRepository<T, ID>> implements CrudService<T, ID> {
 
     protected REPO repo;
 
