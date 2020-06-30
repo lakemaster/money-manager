@@ -48,24 +48,29 @@ public class CategoryController {
 
 
     @PostMapping("/category")
-    public String saveCategory(@ModelAttribute Category category, @RequestParam String action) {
+    public String saveCategory(@ModelAttribute Category category, @RequestParam String action, Model model) {
         log.debug("Save {} action={}", category, action);
-        if ( action.equals("Save As New")) {
+        if ( action.equals("Save As New") || action.equals("Add") ) {
             category.setId(0L);
         }
-        Category savedCategory = categoryService.save(category);
-        log.debug("Category saved: {}", savedCategory);
+
+        Long id;
 
         // todo: maybe move to service
-        // todo: does not work, savedCategory.getGroup() seems to be empty
-        Category parent = savedCategory.getGroup();
+        // todo: does not work
+        Category parent = categoryService.findById(category.getGroup().getId());
         if ( parent != null ) {
-            parent.getSubCategories().add(savedCategory);
+            parent.getSubCategories().add(category);
             categoryService.save(parent);
             log.debug("Category saved: {}", parent);
+            id = parent.getId();
+        } else {
+            category = categoryService.save(category);
+            log.debug("Category saved: {}", category);
+            id = category.getId();
         }
 
-        return String.format("redirect:/category/%d", savedCategory.getId());
+        return String.format("redirect:/category/%d", id);
     }
 
     @GetMapping("/category/{id}/delete")

@@ -18,6 +18,7 @@
               th:action="'/category'">
             <div class="ten columns">
                 <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{group}">
                 <label for="nameInput">Name</label>
                 <input class="u-full-width" type="text" id="nameInput" th:field="*{name}">
                 <label for="descriptionInput">Description</label>
