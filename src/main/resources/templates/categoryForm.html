@@ -7,7 +7,8 @@
         <header th:insert="fragments/general.html :: header"> </header>
 
         <!--/*@thymesVar id="category" type="com.jojobi.mm.model.Category"*/-->
-        <h3>
+        <!--/*@thymesVar id="addMode" type="java.lang.Boolean"*/-->
+        <h3 th:text="${addMode} ? 'Add new Transaction Subcategory' : 'Modify Transaction Category'">
             Modify Transaction Category
         </h3>
     </div>
@@ -22,8 +23,8 @@
                 <label for="descriptionInput">Description</label>
                 <input class="u-full-width" type="text" id="descriptionInput" th:field="*{description}">
                 <br>
-                <input class="button-primary" type="submit" name="action" value="Update"/>
-                <input class="button-primary" type="submit" name="action" value="Save As New"/>
+                <input class="button-primary" type="submit" name="action" th:value="${addMode} ? 'Add' : 'Update'"/>
+                <input class="button-primary" type="submit" name="action" value="Save As New" th:if="${addMode == false} "/>
             </div>
         </form>
     </div>

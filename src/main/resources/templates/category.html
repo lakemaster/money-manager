@@ -49,7 +49,7 @@
 
         <div>
             <a class="button button-primary" href="#" th:href="@{'/category/' + ${categoryInfo.getCategory().getId()} + '/modify'}">Modify</a>
-            <a class="button button-primary" href="#" th:href="@{'/category/' + ${categoryInfo.getCategory().getId()} + '/add_new_subcategory'}">Add new Subcategory</a>
+            <a class="button button-primary" href="#" th:href="@{'/category/' + ${categoryInfo.getCategory().getId()} + '/add_subcategory'}">Add Subcategory</a>
             <a class="button button-primary" href="#" th:href="@{'/category/' + ${categoryInfo.getCategory().getId()} + '/delete'}">Delete</a>
             <a class="button button-primary" href="#" th:href="@{'/category/' + ${categoryInfo.getCategory().getId()} + '/delete?with_subcategories=true'}">Delete with Subcategories</a>
         </div>

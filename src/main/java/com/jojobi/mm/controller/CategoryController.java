@@ -36,6 +36,17 @@ public class CategoryController {
         return "categoryForm";
     }
 
+    @GetMapping("/category/{id}/add_subcategory")
+    public String addSubCategory(@PathVariable Long id, Model model) {
+        Category parent = categoryService.findById(id);
+        Category newChild = Category.builder().group(parent).build();
+
+        model.addAttribute("category", newChild);
+        model.addAttribute("addMode", Boolean.TRUE);
+        return "categoryForm";
+    }
+
+
     @PostMapping("/category")
     public String saveCategory(@ModelAttribute Category category, @RequestParam String action) {
         log.debug("Save {} action={}", category, action);
@@ -44,6 +55,16 @@ public class CategoryController {
         }
         Category savedCategory = categoryService.save(category);
         log.debug("Category saved: {}", savedCategory);
+
+        // todo: maybe move to service
+        // todo: does not work, savedCategory.getGroup() seems to be empty
+        Category parent = savedCategory.getGroup();
+        if ( parent != null ) {
+            parent.getSubCategories().add(savedCategory);
+            categoryService.save(parent);
+            log.debug("Category saved: {}", parent);
+        }
+
         return String.format("redirect:/category/%d", savedCategory.getId());
     }
 

@@ -3,6 +3,7 @@ package com.jojobi.mm.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Entity
 public class Category extends BaseEntity {
 
+    @NotBlank
     private String name;
     private String description;
 
