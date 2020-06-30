@@ -9,9 +9,5 @@ public interface CrudService<T, ID> {
 
     T findById(ID id);
 
-    default T save(T obj) {
-        return save(obj, false);
-    }
-
-    T save(T obj, boolean asIs);
+    T save(T obj);
 }

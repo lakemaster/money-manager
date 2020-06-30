@@ -28,11 +28,7 @@ public abstract class AbstractCrudServiceImpl<T extends BaseEntity, ID, REPO ext
     }
 
     @Override
-    public T save(T obj, boolean asIs) {
-        if (asIs || obj.getId() == null || obj.getId() == 0)
-            return repo.save(obj);
-
-        T obj2 = repo.findById((ID) obj.getId()).map(t -> (T) t.merge(obj)).orElse(obj);
-        return repo.save(obj2);
+    public T save(T obj) {
+        return repo.save(obj);
     }
 }

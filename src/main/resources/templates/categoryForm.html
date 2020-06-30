@@ -25,7 +25,7 @@
                 <input class="u-full-width" type="text" id="descriptionInput" th:field="*{description}">
                 <br>
                 <input class="button-primary" type="submit" name="action" th:value="${addMode} ? 'Add' : 'Update'"/>
-                <input class="button-primary" type="submit" name="action" value="Save As New" th:if="${addMode == false} "/>
+                <input class="button-primary" type="submit" name="action" value="Save As New" th:if="!${addMode}"/>
             </div>
         </form>
     </div>

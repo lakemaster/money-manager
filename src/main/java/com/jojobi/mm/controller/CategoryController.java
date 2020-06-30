@@ -48,29 +48,29 @@ public class CategoryController {
 
 
     @PostMapping("/category")
-    public String saveCategory(@ModelAttribute Category category, @RequestParam String action, Model model) {
-        log.debug("Save {} action={}", category, action);
+    public String saveCategory(@ModelAttribute Category category_in, @RequestParam String action) {
+        log.debug("Save {} action={}", category_in, action);
+        Category category;
         if ( action.equals("Save As New") || action.equals("Add") ) {
-            category.setId(0L);
+            category_in.setId(0L);
+            category = categoryService.save(category_in);
+        } else {
+            // merge unmanaged category into managed category and save
+            category = categoryService.findById(category_in.getId());
+            category.merge(category_in);
+            category = categoryService.save(category);
         }
 
-        Long id;
-
         // todo: maybe move to service
-        // todo: does not work
-        Category parent = categoryService.findById(category.getGroup().getId());
-        if ( parent != null ) {
+        Category parent = category.getGroup();
+        if ( action.equals("Add") && parent != null ) {
             parent.getSubCategories().add(category);
             categoryService.save(parent);
             log.debug("Category saved: {}", parent);
-            id = parent.getId();
-        } else {
-            category = categoryService.save(category);
-            log.debug("Category saved: {}", category);
-            id = category.getId();
+            category = parent;
         }
 
-        return String.format("redirect:/category/%d", id);
+        return String.format("redirect:/category/%d", category.getId());
     }
 
     @GetMapping("/category/{id}/delete")
