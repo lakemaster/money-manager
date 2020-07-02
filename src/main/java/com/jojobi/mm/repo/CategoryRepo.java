@@ -10,4 +10,6 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
 
     List<Category> findAllByGroupIsNullOrderByName();
 
+    Category findCategoryByName(String categoryName);
+
 }

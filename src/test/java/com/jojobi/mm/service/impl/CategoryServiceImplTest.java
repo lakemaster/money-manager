@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryServiceImplTest {
 
-
     @Test
     void getPath() {
         Category g1 = Category.builder().id(1L).name("g1").build();

@@ -34,4 +34,8 @@ public class Category extends BaseEntity {
         this.group = group;
         this.subCategories = Optional.ofNullable(subCategories).orElse(this.subCategories);
     }
+
+    public Category getSubCategoryByName(String subCategoryName) {
+        return subCategories.stream().filter(c -> c.getName().equals(subCategoryName)).findFirst().orElse(null);
+    }
 }

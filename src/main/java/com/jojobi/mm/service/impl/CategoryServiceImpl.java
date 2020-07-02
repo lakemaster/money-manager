@@ -33,8 +33,13 @@ public class CategoryServiceImpl extends AbstractCrudServiceImpl<Category, Long,
     }
 
     @Override
-    public List<Category> getAllTopLevelNatures() {
+    public List<Category> getAllTopLevelCategories() {
         return repo.findAllByGroupIsNullOrderByName();
+    }
+
+    @Override
+    public Category findByName(String categoryName) {
+        return repo.findCategoryByName(categoryName);
     }
 
     @Override

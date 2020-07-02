@@ -58,6 +58,17 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static final String CP_BANK_ACCOUNT_BIC = "ZIUZDHG187263";
     public static final String CP_BANK_ACCOUNT_ISIN = "FR9832754928";
 
+    public static final String RETIREMENT_PROVISION = "Retirement Provision";
+    public static final String SAVINGS_ACCOUNT = "Savings Account";
+    public static final String BUILDING_SAVING = "Building Saving";
+    public static final String SAVINGS = "Savings";
+    public static final String PRECAUTION = "Precaution";
+    public static final String CASH_WITHDRAWAL_GC_1 = "Cash Withdrawal GC 1";
+    public static final String CASH_WITHDRAWAL_GC_2 = "Cash Withdrawal GC 2";
+    public static final String CASH_WITHDRAWAL_MC = "Cash Withdrawal MC";
+    public static final String CASH_WITHDRAWAL = "Cash Withdrawal";
+    public static final String INSURENCE = "Insurence";
+
 
     private final AccountService accountService;
     private final LegalEntityService legalEntityService;
@@ -227,28 +238,28 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private void loadNatures(){
 
         Category retirementProvision = Category.builder()
-                .name("Retirement Provision")
+                .name(RETIREMENT_PROVISION)
                 .description("Retirement Provision")
                 .build();
 
         Category depositAccount = Category.builder()
-                .name("Savings Account")
+                .name(SAVINGS_ACCOUNT)
                 .description("Savings Account")
                 .build();
 
         Category buildingSaving = Category.builder()
-                .name("Building Saving")
+                .name(BUILDING_SAVING)
                 .description("Building Saving Contract")
                 .build();
 
         Category savings = Category.builder()
-                .name("Savings")
+                .name(SAVINGS)
                 .description("General Savings")
                 .subCategories(List.of(depositAccount, buildingSaving))
                 .build();
 
         Category precaution = Category.builder()
-                .name("Precaution")
+                .name(PRECAUTION)
                 .description("General financial precaution")
                 .subCategories(List.of(retirementProvision, savings))
                 .build();
@@ -259,22 +270,22 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         savings.setGroup(precaution);
 
         Category giroCard1 = Category.builder()
-                .name("Cash Withdrawal GC 1")
+                .name(CASH_WITHDRAWAL_GC_1)
                 .description("Cash Withdrawal Girocard 1")
                 .build();
 
         Category giroCard2 = Category.builder()
-                .name("Cash Withdrawal GC 2")
+                .name(CASH_WITHDRAWAL_GC_2)
                 .description("Cash Withdrawal Girocard 2")
                 .build();
 
         Category masterCard = Category.builder()
-                .name("Cash Withdrawal MC")
+                .name(CASH_WITHDRAWAL_MC)
                 .description("Cash Withdrawal Mastercard")
                 .build();
 
         Category cashWithdrawal = Category.builder()
-                .name("Cash Withdrawal")
+                .name(CASH_WITHDRAWAL)
                 .description("General Cash Withdrawal")
                 .subCategories(List.of(giroCard1, giroCard2, masterCard))
                 .build();
@@ -284,7 +295,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         masterCard.setGroup(cashWithdrawal);
 
         Category insurances = Category.builder()
-                .name("Insurence")
+                .name(INSURENCE)
                 .description("General Insurance Costs")
                 .build();
 

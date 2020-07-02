@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface CategoryService extends CrudService<Category, Long> {
 
-    List<Category> getAllTopLevelNatures();
+    List<Category> getAllTopLevelCategories();
+
+    Category findByName(String categoryName);
 
     CategoryInfo getCategoryInfo(Long categoryId);
 

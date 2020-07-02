@@ -20,7 +20,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String getAllTopLevelNatures(Model model) {
-        model.addAttribute("categories", categoryService.getAllTopLevelNatures());
+        model.addAttribute("categories", categoryService.getAllTopLevelCategories());
         return "categories";
     }
 

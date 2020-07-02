@@ -2,9 +2,11 @@ package com.jojobi.mm;
 
 import com.jojobi.mm.bootstrap.TestDataLoader;
 import com.jojobi.mm.model.Account;
+import com.jojobi.mm.model.Category;
 import com.jojobi.mm.model.LegalEntity;
 import com.jojobi.mm.model.Transaction;
 import com.jojobi.mm.service.AccountService;
+import com.jojobi.mm.service.CategoryService;
 import com.jojobi.mm.service.LegalEntityService;
 import com.jojobi.mm.service.TransactionService;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,8 @@ class MoneyManagerApplicationTests {
     private AccountService accountService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private CategoryService categoryService;
 
     @Test
     void contextLoads() {
@@ -36,7 +40,7 @@ class MoneyManagerApplicationTests {
     }
 
     @Test
-    void checkCounterpart() {
+    void checkLegalEntitiesAndAccounts() {
         LegalEntity insuranceCompany = legalEntityService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
         assertThat(insuranceCompany.getName()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_NAME);
@@ -119,7 +123,28 @@ class MoneyManagerApplicationTests {
         assertThat(tr2.getCounterpart()).isEqualTo(insuranceCompany);
         assertThat(tr2.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);
         assertThat(tr2.getCounterpartAccount()).isEqualTo(insuranceCompany.getAccounts().get(0));
+    }
 
+    @Test
+    public void checkCategories() {
+        List<Category> allTopLevelCategories = categoryService.getAllTopLevelCategories();
+        assertThat(allTopLevelCategories.size()).isGreaterThan(0);
 
+        Category precaution = categoryService.findByName(TestDataLoader.PRECAUTION);
+        assertThat(precaution).isNotNull();
+        assertThat(allTopLevelCategories.contains(precaution));
+
+        Category retirementProvision = categoryService.findByName(TestDataLoader.RETIREMENT_PROVISION);
+        Category savings = categoryService.findByName(TestDataLoader.SAVINGS);
+        assertThat(precaution.getSubCategories().size()).isEqualTo(2);
+        assertThat(precaution.getSubCategories().contains(retirementProvision));
+        assertThat(precaution.getSubCategories().contains(savings));
+
+        Category savingsAccount = categoryService.findByName(TestDataLoader.SAVINGS_ACCOUNT);
+        Category buildingSaving = categoryService.findByName(TestDataLoader.BUILDING_SAVING);
+
+        assertThat(savings.getSubCategories().size()).isEqualTo(2);
+        assertThat(savings.getSubCategories().contains(savingsAccount));
+        assertThat(savings.getSubCategories().contains(buildingSaving));
     }
 }
