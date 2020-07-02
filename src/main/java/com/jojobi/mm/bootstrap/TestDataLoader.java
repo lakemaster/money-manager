@@ -62,6 +62,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static final String SAVINGS_ACCOUNT = "Savings Account";
     public static final String BUILDING_SAVING = "Building Saving";
     public static final String SAVINGS = "Savings";
+    public static Long PRECAUTION_ID;
     public static final String PRECAUTION = "Precaution";
     public static final String CASH_WITHDRAWAL_GC_1 = "Cash Withdrawal GC 1";
     public static final String CASH_WITHDRAWAL_GC_2 = "Cash Withdrawal GC 2";
@@ -299,7 +300,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .description("General Insurance Costs")
                 .build();
 
-        categoryService.save(precaution);
+        precaution = categoryService.save(precaution);
+        PRECAUTION_ID = precaution.getId();
         categoryService.save(cashWithdrawal);
         categoryService.save(insurances);
     }
