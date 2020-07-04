@@ -21,9 +21,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     public static final Long MYSELF_ID = 1L;
     public static final String MYSELF_NAME = "Max Mustermann";
-    public static final Long MYSELF_ACCOUNT_ID = 1L;
-    public static final String MYSELF_ACCOUNT_BIC = "IUDEF239875";
-    public static final String MYSELF_ACCOUNT_ISIN = "GB9081143983";
     public static final double MY_SALARY_AMOUNT = 3500.00;
     public static final String MY_SALARY_TRANSACTION_TEXT = "salary";
     public static final LocalDate MY_SALARY_BOOKING_DATE = LocalDate.of(2020, 1, 2);
@@ -37,38 +34,17 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     public static final Long CP_EMPLOYER_ID = 2L;
     public static final String CP_EMPLOYER_NAME = "Small Business GmbH";
-    public static final Long CP_EMPLOYER_ACCOUNT_ID = 2L;
     public static final String CP_EMPLOYER_ACCOUNT_BIC = "GHTRF4564";
     public static final String CP_EMPLOYER_ACCOUNT_ISIN = "CH36453658763";
 
     public static final Long CP_INSURANCE_COMPANY_ID = 3L;
     public static final String CP_INSURANCE_COMPANY_NAME = "Big Business AG";
-    public static final String CP_INSURANCE_CREDITOR_ID = "DE98C90385-01";
-    public static final Long CP_INSURANCE_ACCOUNT1_ID = 3L;
     public static final String CP_INSURANCE_ACCOUNT1_BIC = "ABCDEF1234";
     public static final String CP_INSURANCE_ACCOUNT1_ISIN = "DE1234567891234";
-    public static final Long CP_INSURANCE_ACCOUNT2_ID = 4L;
     public static final String CP_INSURANCE_ACCOUNT2_BIC = "XYZDEF6789";
     public static final String CP_INSURANCE_ACCOUNT2_ISIN = "SE9876543219876";
 
-    public static final Long CP_BANK_ID = 4L;
-    public static final String CP_BANK_NAME = "Country Bank";
-    public static final Long CP_BANK_ACCOUNT_ID = 5L;
-    public static final String CP_BANK_ACCOUNT_BIC = "ZIUZDHG187263";
-    public static final String CP_BANK_ACCOUNT_ISIN = "FR9832754928";
-
     public static final String RETIREMENT_PROVISION = "Retirement Provision";
-    public static final String SAVINGS_ACCOUNT = "Savings Account";
-    public static final String BUILDING_SAVING = "Building Saving";
-    public static final String SAVINGS = "Savings";
-    public static Long PRECAUTION_ID;
-    public static final String PRECAUTION = "Precaution";
-    public static final String CASH_WITHDRAWAL_GC_1 = "Cash Withdrawal GC 1";
-    public static final String CASH_WITHDRAWAL_GC_2 = "Cash Withdrawal GC 2";
-    public static final String CASH_WITHDRAWAL_MC = "Cash Withdrawal MC";
-    public static final String CASH_WITHDRAWAL = "Cash Withdrawal";
-    public static final String INSURENCE = "Insurence";
-
 
     private final AccountService accountService;
     private final LegalEntityService legalEntityService;
@@ -85,7 +61,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public static Account bankAccount;
     public static LegalEntity bank;
     public static Category retirementProvision;
-    public static Category depositAccount;
+    public static Category savingsOnSavingsAccount;
     public static Category buildingSaving;
     public static Category savings;
     public static Category precaution;
@@ -114,14 +90,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // myself
         myAccount = Account.builder()
-                .id(MYSELF_ACCOUNT_ID)
-                .bic(MYSELF_ACCOUNT_BIC)
-                .isin(MYSELF_ACCOUNT_ISIN)
+                .id(1L)
+                .bic("IUDEF239875")
+                .isin("GB9081143983")
                 .build();
 
         myself = LegalEntity.builder()
-                .id(MYSELF_ID)
-                .name(MYSELF_NAME)
+                .id(1L)
+                .name("Max Mustermann")
                 .accounts(List.of(myAccount))
                 .build();
 
@@ -132,14 +108,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // Counterpart Employer
         employerAccount = Account.builder()
-                .id(CP_EMPLOYER_ACCOUNT_ID)
-                .bic(CP_EMPLOYER_ACCOUNT_BIC)
-                .isin(CP_EMPLOYER_ACCOUNT_ISIN)
+                .id(2L)
+                .bic("GHTRF4564")
+                .isin("CH36453658763")
                 .build();
 
         employer = LegalEntity.builder()
-                .id(CP_EMPLOYER_ID)
-                .name(CP_EMPLOYER_NAME)
+                .id(2L)
+                .name("Small Business GmbH")
                 .accounts(List.of(employerAccount))
                 .build();
 
@@ -150,22 +126,22 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // Counterpart Insurance Company
         insuranceAccount1 = Account.builder()
-                .id(CP_INSURANCE_ACCOUNT1_ID)
-                .bic(CP_INSURANCE_ACCOUNT1_BIC)
-                .isin(CP_INSURANCE_ACCOUNT1_ISIN)
+                .id(3L)
+                .bic("ABCDEF1234")
+                .isin("DE1234567891234")
                 .build();
 
         insuranceAccount2 = Account.builder()
-                .id(CP_INSURANCE_ACCOUNT2_ID)
-                .bic(CP_INSURANCE_ACCOUNT2_BIC)
-                .isin(CP_INSURANCE_ACCOUNT2_ISIN)
+                .id(4L)
+                .bic("XYZDEF6789")
+                .isin("SE9876543219876")
                 .build();
 
         insuranceCompany = LegalEntity.builder()
-                .id(CP_INSURANCE_COMPANY_ID)
-                .name(CP_INSURANCE_COMPANY_NAME)
+                .id(3L)
+                .name("Big Business AG")
                 .accounts(List.of(insuranceAccount1, insuranceAccount2))
-                .creditorId(CP_INSURANCE_CREDITOR_ID)
+                .creditorId("DE98C90385-01")
                 .build();
 
         insuranceAccount1.setOwner(insuranceCompany);
@@ -175,14 +151,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         // Bank
         bankAccount = Account.builder()
-                .id(CP_BANK_ACCOUNT_ID)
-                .bic(CP_BANK_ACCOUNT_BIC)
-                .isin(CP_BANK_ACCOUNT_ISIN)
+                .id(5L)
+                .bic("ZIUZDHG187263")
+                .isin("FR9832754928")
                 .build();
 
         bank = LegalEntity.builder()
-                .id(CP_BANK_ID)
-                .name(CP_BANK_NAME)
+                .id(4L)
+                .name("Country Bank")
                 .accounts(List.of(bankAccount))
                 .build();
 
@@ -196,25 +172,25 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         transactionService.save(Transaction.builder()
                 .account(myAccount)
                 .type(TransactionType.DEBIT)
-                .amount(MY_SALARY_AMOUNT)
+                .amount(3500.00)
                 .counterpart(employer)
                 .counterpartAccount(employerAccount)
-                .text(MY_SALARY_TRANSACTION_TEXT)
-                .bookingDate(MY_SALARY_BOOKING_DATE)
-                .valueDate(MY_SALARY_VALUE_DATE)
+                .text("salary")
+                .bookingDate(LocalDate.of(2020, 1, 2))
+                .valueDate(LocalDate.of(2020, 1, 2))
                 .build());
 
         transactionService.save(Transaction.builder()
                 .account(myAccount)
                 .type(TransactionType.CREDIT)
-                .amount(MY_INSURANCE_PREMIUM)
+                .amount(325.00)
                 .counterpart(insuranceCompany)
                 .counterpartAccount(insuranceAccount1)
-                .text(MY_INSURANCE_TRANSACTION_TEXT)
-                .bookingDate(MY_INSURANCE_BOOKING_DATE)
-                .valueDate(MY_INSURANCE_VALUE_DATE)
-                .customerReference(MY_INSURANCE_CUSTOMER_REFERENCE)
-                .mandate(MY_INSURANCE_MANDATE)
+                .text("insurance")
+                .bookingDate(LocalDate.of(2020, 1, 17))
+                .valueDate(LocalDate.of(2020, 1, 20))
+                .customerReference("54273813656")
+                .mandate("CSDA357987654398")
                 .build());
 
         transactionService.save(Transaction.builder()
@@ -260,50 +236,50 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .description("Retirement Provision")
                 .build();
 
-        depositAccount = Category.builder()
-                .name(SAVINGS_ACCOUNT)
-                .description("Savings Account")
+        savingsOnSavingsAccount = Category.builder()
+                .name("Savings on Savings Account")
+                .description("Savings on Savings Account")
                 .build();
 
         buildingSaving = Category.builder()
-                .name(BUILDING_SAVING)
+                .name("Building Saving")
                 .description("Building Saving Contract")
                 .build();
 
         savings = Category.builder()
-                .name(SAVINGS)
+                .name("Savings")
                 .description("General Savings")
-                .subCategories(List.of(depositAccount, buildingSaving))
+                .subCategories(List.of(savingsOnSavingsAccount, buildingSaving))
                 .build();
 
         precaution = Category.builder()
-                .name(PRECAUTION)
+                .name("Precaution")
                 .description("General financial precaution")
                 .subCategories(List.of(retirementProvision, savings))
                 .build();
 
-        depositAccount.setGroup(savings);
+        savingsOnSavingsAccount.setGroup(savings);
         buildingSaving.setGroup(savings);
         retirementProvision.setGroup(precaution);
         savings.setGroup(precaution);
 
         giroCard1 = Category.builder()
-                .name(CASH_WITHDRAWAL_GC_1)
+                .name("Cash Withdrawal GC 1")
                 .description("Cash Withdrawal Girocard 1")
                 .build();
 
         giroCard2 = Category.builder()
-                .name(CASH_WITHDRAWAL_GC_2)
+                .name("Cash Withdrawal GC 2")
                 .description("Cash Withdrawal Girocard 2")
                 .build();
 
         masterCard = Category.builder()
-                .name(CASH_WITHDRAWAL_MC)
+                .name("Cash Withdrawal MC")
                 .description("Cash Withdrawal Mastercard")
                 .build();
 
         cashWithdrawal = Category.builder()
-                .name(CASH_WITHDRAWAL)
+                .name("Cash Withdrawal")
                 .description("General Cash Withdrawal")
                 .subCategories(List.of(giroCard1, giroCard2, masterCard))
                 .build();
@@ -313,12 +289,11 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         masterCard.setGroup(cashWithdrawal);
 
         insurances = Category.builder()
-                .name(INSURENCE)
+                .name("Insurence")
                 .description("General Insurance Costs")
                 .build();
 
         precaution = categoryService.save(precaution);
-        PRECAUTION_ID = precaution.getId();
         categoryService.save(cashWithdrawal);
         categoryService.save(insurances);
     }

@@ -31,4 +31,8 @@ public class LegalEntity extends BaseEntity {
         this.creditorId = creditorId;
         this.accounts = Optional.ofNullable(accounts).orElse(this.accounts);
     }
+
+    public Account getAccount(String isin) {
+        return accounts.stream().filter(acc -> acc.getIsin().equals(isin)).findFirst().orElse(null);
+    }
 }

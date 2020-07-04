@@ -1,6 +1,5 @@
 package com.jojobi.mm.controller;
 
-import com.jojobi.mm.bootstrap.TestDataLoader;
 import com.jojobi.mm.session.SessionParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ abstract class AbstractControllerITest {
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         SessionParameters sessionParameters = new SessionParameters();
-        sessionParameters.setMyAccountId(TestDataLoader.MYSELF_ACCOUNT_ID);
+        sessionParameters.setMyAccountId(1L);
         mockHttpSession = new MockHttpSession();
         mockHttpSession.setAttribute("scopedTarget.sessionParameters", sessionParameters);
     }

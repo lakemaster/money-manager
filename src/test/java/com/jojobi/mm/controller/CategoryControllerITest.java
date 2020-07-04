@@ -45,7 +45,7 @@ class CategoryControllerITest extends AbstractControllerITest {
     void getCategory() throws Exception {
         URI uri = UriComponentsBuilder.fromPath(CategoryController.BASE_CATEGORY_URL)
                 .pathSegment("{category_id}")
-                .build(TestDataLoader.PRECAUTION_ID);
+                .build(TestDataLoader.precaution.getId());
 
         perform(uri)
                 .andExpect(status().isOk())

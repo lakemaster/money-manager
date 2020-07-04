@@ -72,28 +72,30 @@ class MoneyManagerApplicationTests {
         assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
 
         Account myAcc = myself.getAccounts().get(0);
-        assertThat(myAcc.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
-        assertThat(myAcc.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
+        assertThat(myAcc.getBic()).isEqualTo(TestDataLoader.myAccount.getBic());
+        assertThat(myAcc.getIsin()).isEqualTo(TestDataLoader.myAccount.getIsin());
         assertThat(myAcc.getOwner().getId()).isEqualTo(TestDataLoader.MYSELF_ID);
         assertThat(myAcc.getOwner()).isEqualTo(myself);
     }
 
     @Test
     void checkTransactions() {
-        Account myAccount = accountService.findAccountByIsin(TestDataLoader.MYSELF_ACCOUNT_ISIN);
-        assertThat(myAccount.getIsin()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_ISIN);
-        assertThat(myAccount.getBic()).isEqualTo(TestDataLoader.MYSELF_ACCOUNT_BIC);
+        // check my account
+        Account myAccount = accountService.findAccountByIsin(TestDataLoader.myAccount.getIsin());
+        assertThat(myAccount).isEqualTo(TestDataLoader.myAccount);
 
+        // check myself
         LegalEntity myself = myAccount.getOwner();
-        assertThat(myself.getId()).isEqualTo(TestDataLoader.MYSELF_ID);
-        assertThat(myself.getName()).isEqualTo(TestDataLoader.MYSELF_NAME);
-        assertThat(myself.getAccounts().size()).isEqualTo(1);
-        assertThat(myself.getAccounts().get(0).getId()).isEqualTo(myAccount.getId());
-        assertThat(myself.getAccounts().get(0)).isEqualTo(myAccount);
+        assertThat(myself).isEqualTo(TestDataLoader.myself);
+        myself.getAccounts().forEach(acc -> {
+            assertThat(acc).isEqualTo(TestDataLoader.myself.getAccount(acc.getIsin()));
+        });
 
+        // check number of transactions on my account
         List<Transaction> transactions = transactionService.findAllByAccount(myAccount);
         assertThat(transactions.size()).isEqualTo(5);
 
+        // check first transaction
         Transaction tr1 = transactions.get(0);
         assertThat(tr1.getAccount().getId()).isEqualTo(myAccount.getId());
         assertThat(tr1.getAmount()).isEqualTo(TestDataLoader.MY_SALARY_AMOUNT);
@@ -103,12 +105,12 @@ class MoneyManagerApplicationTests {
         assertThat(tr1.getMandate()).isNullOrEmpty();
         assertThat(tr1.getText()).isEqualTo(TestDataLoader.MY_SALARY_TRANSACTION_TEXT);
 
-        LegalEntity employer = legalEntityService.findById(TestDataLoader.CP_EMPLOYER_ID);
-        assertThat(tr1.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ID);
+        LegalEntity employer = legalEntityService.findById(TestDataLoader.employer.getId());
+        assertThat(tr1.getCounterpart()).isEqualTo(TestDataLoader.employer);
         assertThat(tr1.getCounterpart()).isEqualTo(employer);
-        assertThat(tr1.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_EMPLOYER_ACCOUNT_ID);
-        assertThat(tr1.getCounterpartAccount()).isEqualTo(employer.getAccounts().get(0));
+        assertThat(tr1.getCounterpartAccount()).isEqualTo(TestDataLoader.employerAccount);
 
+        // check second transaction
         Transaction tr2 = transactions.get(1);
         assertThat(tr2.getAccount().getId()).isEqualTo(myAccount.getId());
         assertThat(tr2.getAmount()).isEqualTo(TestDataLoader.MY_INSURANCE_PREMIUM);
@@ -119,10 +121,9 @@ class MoneyManagerApplicationTests {
         assertThat(tr2.getText()).isEqualTo(TestDataLoader.MY_INSURANCE_TRANSACTION_TEXT);
 
         LegalEntity insuranceCompany = legalEntityService.findById(TestDataLoader.CP_INSURANCE_COMPANY_ID);
-        assertThat(tr2.getCounterpart().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_COMPANY_ID);
+        assertThat(tr2.getCounterpart()).isEqualTo(TestDataLoader.insuranceCompany);
         assertThat(tr2.getCounterpart()).isEqualTo(insuranceCompany);
-        assertThat(tr2.getCounterpartAccount().getId()).isEqualTo(TestDataLoader.CP_INSURANCE_ACCOUNT1_ID);
-        assertThat(tr2.getCounterpartAccount()).isEqualTo(insuranceCompany.getAccounts().get(0));
+        assertThat(tr2.getCounterpartAccount()).isEqualTo(TestDataLoader.insuranceAccount1);
     }
 
     @Test
@@ -130,21 +131,21 @@ class MoneyManagerApplicationTests {
         List<Category> allTopLevelCategories = categoryService.getAllTopLevelCategories();
         assertThat(allTopLevelCategories.size()).isGreaterThan(0);
 
-        Category precaution = categoryService.findByName(TestDataLoader.PRECAUTION);
-        assertThat(precaution).isNotNull();
+        Category precaution = categoryService.findByName(TestDataLoader.precaution.getName());
+        assertThat(precaution).isEqualTo(TestDataLoader.precaution);
         assertThat(allTopLevelCategories.contains(precaution));
 
-        Category retirementProvision = categoryService.findByName(TestDataLoader.RETIREMENT_PROVISION);
-        Category savings = categoryService.findByName(TestDataLoader.SAVINGS);
+        Category retirementProvision = categoryService.findByName(TestDataLoader.retirementProvision.getName());
+        Category savings = categoryService.findByName(TestDataLoader.savings.getName());
         assertThat(precaution.getSubCategories().size()).isEqualTo(2);
         assertThat(precaution.getSubCategories().contains(retirementProvision));
         assertThat(precaution.getSubCategories().contains(savings));
 
-        Category savingsAccount = categoryService.findByName(TestDataLoader.SAVINGS_ACCOUNT);
-        Category buildingSaving = categoryService.findByName(TestDataLoader.BUILDING_SAVING);
+        Category savingsOnSavingsAccount = categoryService.findByName(TestDataLoader.savingsOnSavingsAccount.getName());
+        Category buildingSaving = categoryService.findByName(TestDataLoader.buildingSaving.getName());
 
         assertThat(savings.getSubCategories().size()).isEqualTo(2);
-        assertThat(savings.getSubCategories().contains(savingsAccount));
+        assertThat(savings.getSubCategories().contains(savingsOnSavingsAccount));
         assertThat(savings.getSubCategories().contains(buildingSaving));
     }
 }
