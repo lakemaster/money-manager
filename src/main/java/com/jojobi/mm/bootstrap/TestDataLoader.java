@@ -7,7 +7,6 @@ import com.jojobi.mm.service.CategoryService;
 import com.jojobi.mm.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -76,6 +75,26 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private final TransactionService transactionService;
     private final CategoryService categoryService;
 
+    public static Account myAccount;
+    public static LegalEntity myself;
+    public static Account employerAccount;
+    public static LegalEntity employer;
+    public static Account insuranceAccount1;
+    public static Account insuranceAccount2;
+    public static LegalEntity insuranceCompany;
+    public static Account bankAccount;
+    public static LegalEntity bank;
+    public static Category retirementProvision;
+    public static Category depositAccount;
+    public static Category buildingSaving;
+    public static Category savings;
+    public static Category precaution;
+    public static Category giroCard1;
+    public static Category giroCard2;
+    public static Category masterCard;
+    public static Category cashWithdrawal;
+    public static Category insurances;
+
     public TestDataLoader(AccountService accountService, LegalEntityService legalEntityService, TransactionService transactionService, CategoryService categoryService) {
         this.accountService = accountService;
         this.legalEntityService = legalEntityService;
@@ -88,19 +107,19 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         log.info("Run {}", this.getClass().getSimpleName());
 
         loadTestLegelEntitiesAndTransactions();
-        loadNatures();
+        loadCategories();
     }
 
     private void loadTestLegelEntitiesAndTransactions() {
 
         // myself
-        Account myAccount = Account.builder()
+        myAccount = Account.builder()
                 .id(MYSELF_ACCOUNT_ID)
                 .bic(MYSELF_ACCOUNT_BIC)
                 .isin(MYSELF_ACCOUNT_ISIN)
                 .build();
 
-        LegalEntity myself = LegalEntity.builder()
+        myself = LegalEntity.builder()
                 .id(MYSELF_ID)
                 .name(MYSELF_NAME)
                 .accounts(List.of(myAccount))
@@ -112,13 +131,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
 
         // Counterpart Employer
-        Account employerAccount = Account.builder()
+        employerAccount = Account.builder()
                 .id(CP_EMPLOYER_ACCOUNT_ID)
                 .bic(CP_EMPLOYER_ACCOUNT_BIC)
                 .isin(CP_EMPLOYER_ACCOUNT_ISIN)
                 .build();
 
-        LegalEntity employer = LegalEntity.builder()
+        employer = LegalEntity.builder()
                 .id(CP_EMPLOYER_ID)
                 .name(CP_EMPLOYER_NAME)
                 .accounts(List.of(employerAccount))
@@ -130,19 +149,19 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
 
         // Counterpart Insurance Company
-        Account insuranceAccount1 = Account.builder()
+        insuranceAccount1 = Account.builder()
                 .id(CP_INSURANCE_ACCOUNT1_ID)
                 .bic(CP_INSURANCE_ACCOUNT1_BIC)
                 .isin(CP_INSURANCE_ACCOUNT1_ISIN)
                 .build();
 
-        Account insuranceAccount2 = Account.builder()
+        insuranceAccount2 = Account.builder()
                 .id(CP_INSURANCE_ACCOUNT2_ID)
                 .bic(CP_INSURANCE_ACCOUNT2_BIC)
                 .isin(CP_INSURANCE_ACCOUNT2_ISIN)
                 .build();
 
-        LegalEntity insuranceCompany = LegalEntity.builder()
+        insuranceCompany = LegalEntity.builder()
                 .id(CP_INSURANCE_COMPANY_ID)
                 .name(CP_INSURANCE_COMPANY_NAME)
                 .accounts(List.of(insuranceAccount1, insuranceAccount2))
@@ -155,13 +174,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         insuranceCompany = legalEntityService.save(insuranceCompany);
 
         // Bank
-        Account bankAccount = Account.builder()
+        bankAccount = Account.builder()
                 .id(CP_BANK_ACCOUNT_ID)
                 .bic(CP_BANK_ACCOUNT_BIC)
                 .isin(CP_BANK_ACCOUNT_ISIN)
                 .build();
 
-        LegalEntity bank = LegalEntity.builder()
+        bank = LegalEntity.builder()
                 .id(CP_BANK_ID)
                 .name(CP_BANK_NAME)
                 .accounts(List.of(bankAccount))
@@ -198,7 +217,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .mandate(MY_INSURANCE_MANDATE)
                 .build());
 
-        Transaction t = Transaction.builder()
+        transactionService.save(Transaction.builder()
                 .account(myAccount)
                 .type(TransactionType.CREDIT)
                 .amount(100d)
@@ -207,9 +226,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 .text("cash point withdrawal")
                 .bookingDate(LocalDate.of(2020, 1, 20))
                 .valueDate(LocalDate.of(2020, 1, 20))
-                .build();
-
-        transactionService.save(t);
+                .build());
 
         transactionService.save(Transaction.builder()
                 .account(myAccount)
@@ -236,30 +253,30 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     }
 
 
-    private void loadNatures(){
+    private void loadCategories(){
 
-        Category retirementProvision = Category.builder()
+        retirementProvision = Category.builder()
                 .name(RETIREMENT_PROVISION)
                 .description("Retirement Provision")
                 .build();
 
-        Category depositAccount = Category.builder()
+        depositAccount = Category.builder()
                 .name(SAVINGS_ACCOUNT)
                 .description("Savings Account")
                 .build();
 
-        Category buildingSaving = Category.builder()
+        buildingSaving = Category.builder()
                 .name(BUILDING_SAVING)
                 .description("Building Saving Contract")
                 .build();
 
-        Category savings = Category.builder()
+        savings = Category.builder()
                 .name(SAVINGS)
                 .description("General Savings")
                 .subCategories(List.of(depositAccount, buildingSaving))
                 .build();
 
-        Category precaution = Category.builder()
+        precaution = Category.builder()
                 .name(PRECAUTION)
                 .description("General financial precaution")
                 .subCategories(List.of(retirementProvision, savings))
@@ -270,22 +287,22 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         retirementProvision.setGroup(precaution);
         savings.setGroup(precaution);
 
-        Category giroCard1 = Category.builder()
+        giroCard1 = Category.builder()
                 .name(CASH_WITHDRAWAL_GC_1)
                 .description("Cash Withdrawal Girocard 1")
                 .build();
 
-        Category giroCard2 = Category.builder()
+        giroCard2 = Category.builder()
                 .name(CASH_WITHDRAWAL_GC_2)
                 .description("Cash Withdrawal Girocard 2")
                 .build();
 
-        Category masterCard = Category.builder()
+        masterCard = Category.builder()
                 .name(CASH_WITHDRAWAL_MC)
                 .description("Cash Withdrawal Mastercard")
                 .build();
 
-        Category cashWithdrawal = Category.builder()
+        cashWithdrawal = Category.builder()
                 .name(CASH_WITHDRAWAL)
                 .description("General Cash Withdrawal")
                 .subCategories(List.of(giroCard1, giroCard2, masterCard))
@@ -295,7 +312,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         giroCard2.setGroup(cashWithdrawal);
         masterCard.setGroup(cashWithdrawal);
 
-        Category insurances = Category.builder()
+        insurances = Category.builder()
                 .name(INSURENCE)
                 .description("General Insurance Costs")
                 .build();

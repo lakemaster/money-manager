@@ -43,7 +43,6 @@ class CategoryControllerITest extends AbstractControllerITest {
 
     @Test
     void getCategory() throws Exception {
-
         URI uri = UriComponentsBuilder.fromPath(CategoryController.BASE_CATEGORY_URL)
                 .pathSegment("{category_id}")
                 .build(TestDataLoader.PRECAUTION_ID);
@@ -55,8 +54,8 @@ class CategoryControllerITest extends AbstractControllerITest {
                 .andDo(this::extractModelAttributesFromMvcResult);
 
         Category category = categoryInfo.getCategory();
-        assertThat(category.getId()).isEqualTo(TestDataLoader.PRECAUTION_ID);
-        assertThat(category.getName()).isEqualTo(TestDataLoader.PRECAUTION);
+        assertThat(category.getId()).isEqualTo(TestDataLoader.precaution.getId());
+        assertThat(category.getName()).isEqualTo(TestDataLoader.precaution.getName());
     }
 
     @Test
@@ -74,5 +73,4 @@ class CategoryControllerITest extends AbstractControllerITest {
     @Test
     void deleteCategory() {
     }
-
 }
