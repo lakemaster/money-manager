@@ -22,10 +22,12 @@ class CategoryControllerITest extends AbstractControllerITest {
     // workaround to extract model attribute from MvcResult
     private List<Category> topLevelCategories;
     private CategoryInfo categoryInfo;
+    private Category category;
 
     private void extractModelAttributesFromMvcResult(MvcResult mvcResult) {
         topLevelCategories = (List<Category>) mvcResult.getModelAndView().getModel().get("categories");
         categoryInfo = (CategoryInfo) mvcResult.getModelAndView().getModel().get("categoryInfo");
+        category = (Category) mvcResult.getModelAndView().getModel().get("category");
     }
 
     @Test
@@ -59,7 +61,18 @@ class CategoryControllerITest extends AbstractControllerITest {
     }
 
     @Test
-    void modifyCategory() {
+    void modifyCategory() throws Exception {
+        URI uri = UriComponentsBuilder.fromPath(CategoryController.BASE_CATEGORY_URL)
+                .pathSegment("{category_id}/modify")
+                .build(TestDataLoader.precaution.getId());
+
+        perform(uri)
+                .andExpect(status().isOk())
+                .andExpect(view().name(("categoryForm")))
+                .andExpect(model().attribute("category", instanceOf(Category.class)))
+                .andDo(this::extractModelAttributesFromMvcResult);
+
+        assertThat(category).isEqualTo(TestDataLoader.precaution);
     }
 
     @Test
